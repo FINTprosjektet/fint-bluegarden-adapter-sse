@@ -1,6 +1,6 @@
 package no.fint.provider.adapter.service
 
-import no.fint.provider.customcode.service.EventHandlerService
+import no.fint.provider.bluegarden.service.EventHandlerService
 import spock.lang.Specification
 
 class SseServiceSpec extends Specification {

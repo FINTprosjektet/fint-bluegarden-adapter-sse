@@ -1,6 +1,6 @@
 package no.fint.provider.adapter
 
-import no.fint.provider.customcode.Action
+import no.fint.provider.bluegarden.Action
 import spock.lang.Specification
 
 

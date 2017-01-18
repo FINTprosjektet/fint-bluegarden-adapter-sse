@@ -1,10 +1,11 @@
-package no.fint.provider.customcode;
+package no.fint.provider.bluegarden;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum Action {
-    HEALTH;
+    HEALTH,
+    GET_ALL_EMPLOYEES;
 
     public static List<String> getActions() {
         return Arrays.asList(

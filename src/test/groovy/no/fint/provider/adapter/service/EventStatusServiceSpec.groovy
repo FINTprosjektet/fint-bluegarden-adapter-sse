@@ -2,7 +2,7 @@ package no.fint.provider.adapter.service
 
 import no.fint.event.model.Event
 import no.fint.event.model.Status
-import no.fint.provider.customcode.Action
+import no.fint.provider.bluegarden.Action
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity

@@ -1,6 +1,6 @@
 package no.fint.provider.adapter.sse
 
-import no.fint.provider.customcode.service.EventHandlerService
+import no.fint.provider.bluegarden.service.EventHandlerService
 import org.glassfish.jersey.media.sse.InboundEvent
 import spock.lang.Specification
 

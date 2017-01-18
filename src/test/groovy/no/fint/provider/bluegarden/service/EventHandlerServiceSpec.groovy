@@ -1,4 +1,4 @@
-package no.fint.provider.customcode.service
+package no.fint.provider.bluegarden.service
 
 import no.fint.event.model.Event
 import no.fint.event.model.Status
