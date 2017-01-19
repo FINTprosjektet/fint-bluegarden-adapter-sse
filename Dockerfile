@@ -2,4 +2,7 @@ FROM java:8
 LABEL authors="Frode Sjovatsen <frode@fintprosjektet.no>"
 
 ADD build/libs/fint-bluegarden-adapter-see-*.jar /data/app.jar
+ADD import-startssl /data/import-startssl
+CMD chmod +x /data/import-startssl
+CMD /data/import-startssl
 ENTRYPOINT java ${PARAMS} -jar /data/app.jar
