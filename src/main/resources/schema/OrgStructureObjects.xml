@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by vkin (Bluegarden AS) --><xsd:schema targetNamespace="http://bluegarden.no/organisation/structure/object/v31" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dt="http://datatypes.bluegarden.no/object/v3" xmlns="http://bluegarden.no/organisation/structure/object/v31">
+	<xsd:import namespace="http://datatypes.bluegarden.no/object/v3" schemaLocation="DataTypes.xml"/>
+	<!-- OrgList -->
+	<xsd:complexType name="OrgListItemObject">
+		<xsd:annotation>
+			<xsd:documentation>Inneholder informasjon om en organisasjonsenhets</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OrgUnitId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="OrgNavn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Navn på organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GroupId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ParentGroupId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErAktiv" type="dt:IndicatorType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indikerer om organisasjonsenhet er aktiv eller ikke</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrgListObject">
+		<xsd:annotation>
+			<xsd:documentation>List of org units</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OrgUnit" type="OrgListItemObject" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrgList" type="OrgListObject"/>
+	<!-- OrgUnit -->
+	<xsd:complexType name="OrgUnitObject">
+		<xsd:annotation>
+			<xsd:documentation>Inneholder informasjon om en organisasjonsenhet</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OrgNavn" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Navn på organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="GroupId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ParentGroupId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="OrgId" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifiserer det enkelte kostnadssted under arbeidsgiver</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Arbeidsgiver" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifiserer arbeidsgiver som organisasjonsenheten hører under</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Leder" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Signatur til leder av organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LokasjonBeskrivelse" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Beskrivelse av organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LokasjonId" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="LokasjonAdresse1" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Lokasjon av organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LokasjonAdresse2" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Lokasjon av organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="LokasjonPostnr" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="LokasjonPoststed" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ErAktiv" type="dt:IndicatorType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indikerer om organisasjonsenhet er aktiv eller ikke</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErKostnadsforingMulig" type="dt:IndicatorType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indikerer om kostnadsføring er mulig eller ikke.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ErPersonallokeringMulig" type="dt:IndicatorType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Indikerer om personallokering er mulig eller ikke.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OrgnrBedrift" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Unikt registeringsnummer som identifiserer foretak eller bedrift i henhold til et offentlig register</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Kommunenavn" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Kommunenr" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="CreatedTime" type="dt:DateTimeType" minOccurs="0"/>
+			<xsd:element name="UpdatedTime" type="dt:DateTimeType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrgUnit" type="OrgUnitObject"/>
+</xsd:schema>

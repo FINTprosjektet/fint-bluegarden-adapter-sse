@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by XMLSpy 2009 Enterprise Ed., Installed for 5 users (with SMP from 2009-05-12 to 2010-05-13) (Bluegarden as) --><!-- ================================================================================== --><!-- =====      Bluegarden Domenemodul: KodeverkObjects                                                                         ===== --><!-- =====      Revisjon:                  4                                                                                                         ===== --><!-- =====      Sist oppdatert:          15/6-2009                                                                                            ===== --><!-- ================================================================================== --><xsd:schema targetNamespace="http://kodeverk.bluegarden.no/object/v1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dt="http://datatypes.bluegarden.no/object/v3" xmlns:co="http://common.bluegarden.no/object/v1_5" xmlns="http://kodeverk.bluegarden.no/object/v1">
+	<xsd:import namespace="http://datatypes.bluegarden.no/object/v3" schemaLocation="DataTypes.xml"/>
+	<xsd:import namespace="http://common.bluegarden.no/object/v1_5" schemaLocation="CommonObjects.xml"/>
+	<!-- Gruppring av koder / per land -->
+	<!-- Kodeverk -->
+	<xsd:complexType name="KodeverkObject">
+		<xsd:annotation>
+			<xsd:documentation>En samling av begreper eller en klassifikasjon hvor hver tilhørende begrepsdefinisjon er tilknyttet en unik kode innenfor samlingen eller klassifikasjonen.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="ID" type="dt:EntityIdType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Unik objectid for kodeverk</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="parentID" type="dt:EntityIdType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Unik objectid for kodeverk</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Type" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Identifiserer type kodeverk. For eksempel "ansattkode"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Beskrivelse" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Beskrivelse av kodeverk</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Utsteder" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Utsteder av kodeverk. For eksempel "Bluegarden"</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Status" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fritekst. Status på kodeverk</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Kodeverdier" type="KodeverdiType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Liste av kodeverdier</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="validFrom" type="dt:DateTimeType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Id gyldig fra dato</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="validTo" type="dt:DateTimeType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Id gyldig til dato</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:element name="Kodeverk" type="KodeverkObject"/>
+	<!-- KodeverdiType -->
+	<xsd:complexType name="KodeverdiType">
+		<xsd:sequence>
+			<xsd:element name="Kodeverdi" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Unik verdi for kode</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Beskrivelse" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Beskrivelse av kodeverdi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- KodeverdiDecimalType -->
+	<xsd:complexType name="KodeverdiDecimalType">
+		<xsd:sequence>
+			<xsd:element name="Kodeverdi" type="xsd:decimal">
+				<xsd:annotation>
+					<xsd:documentation>Unik verdi for kode</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Beskrivelse" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Beskrivelse av kodeverdi</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- StillingKodeverdiType -->
+	<xsd:complexType name="StillingKodeverdiType">
+		<xsd:complexContent>
+			<xsd:extension base="KodeverdiType">
+				<xsd:sequence>
+					<xsd:element name="Stillingsbetegnelse" type="xsd:string" minOccurs="0">
+						<xsd:annotation>
+							<xsd:documentation>Betegnelse for kode</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<!-- KodeType -->
+	<!--
+	<xsd:simpleType name="KodeType">
+		<xsd:annotation>
+			<xsd:documentation>Må følge standard satt av kodeverk</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+-->
+</xsd:schema>

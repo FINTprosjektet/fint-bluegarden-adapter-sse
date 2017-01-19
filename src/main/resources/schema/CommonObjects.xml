@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://common.bluegarden.no/object/v1_5" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dt="http://datatypes.bluegarden.no/object/v3" xmlns:co="http://common.bluegarden.no/object/v1_5">
+	<xsd:import namespace="http://datatypes.bluegarden.no/object/v3" schemaLocation="DataTypes.xml"/>
+	<!-- Person -->
+	<xsd:complexType name="PersonObject">
+		<xsd:annotation>
+			<xsd:documentation>Beskriver en person</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PersonID" type="dt:EntityIdType">
+				<xsd:annotation>
+					<xsd:documentation>Unik id for person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Personnavn" type="co:PersonNavnType" minOccurs="0"/>
+			<xsd:element name="Kjonn" type="dt:KjonnCodeType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Kjønn for person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Fodselsdato" type="dt:DateType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fødselsdato for person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Fodselsnummer" type="dt:EntityIdType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fødselsnummer/personnummer for person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Sivilstatus" type="dt:SivilstatusEnumType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Sivilstatus for person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AntallBarn" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="Dodsdato" type="dt:DateType" minOccurs="0"/>
+			<xsd:element name="Statsborgerskap" type="dt:LandCodeType" minOccurs="0"/>
+			<xsd:element name="Kontaktinformasjon" type="co:KontaktinformasjonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Parorende" type="co:FamiliemedlemType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Ingen, ett eller flere pårørende tilknyttet person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="UserArea" type="dt:UserAreaType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Tilbygg til eksisterende modell</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Person" type="co:PersonObject"/>
+	<!-- Familiemedlem -->
+	<xsd:complexType name="FamiliemedlemType">
+		<xsd:annotation>
+			<xsd:documentation>Familiemedlem i relasjon til Person. Hva med språk (muntelig)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="co:PersonNavnType">
+				<xsd:sequence>
+					<xsd:element name="Kontaktinformasjon" type="co:KontaktinformasjonType" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+				<xsd:attribute name="erPrimarKontakt" type="dt:IndicatorType"/>
+				<xsd:attribute name="slektskap" type="dt:SlektskapsEnumType"/>
+				<xsd:attribute name="forsorger" type="dt:ForsorgerEnumType"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="Familiemedlem" type="co:FamiliemedlemType"/>
+	<!-- Personnavn -->
+	<xsd:complexType name="PersonNavnType">
+		<xsd:annotation>
+			<xsd:documentation>Representerer en persons navn</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Fulltnavn" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Fornavn" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Mellomnavn" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="Etternavn" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Tittel" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Personnavn" type="co:PersonNavnType"/>
+	<!-- Adresse -->
+	<xsd:complexType name="AdresseType">
+		<xsd:annotation>
+			<xsd:documentation>Beskriver en adresse</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="AdresseLinje1" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fritekst med adressen. Linje1</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdresseLinje2" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fritekst med adressen. Linje2</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdresseLinje3" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fritekst med adressen. Linje3</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AdresseLinje4" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fritekst med adressen. Linje4</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="COAdresse" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Post adressert til en annen persons adresse (co-adresse). Oppgi navn på mottaker</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Postnummer" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Hvis postadressen er norsk vil dette feltet inneholde norske postnummere. Må sjekkes imot Land. Kan inneholde foranstilte 0'er</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Poststed" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Navn på poststed</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Land" type="dt:LandCodeType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Adresse" type="co:AdresseType"/>
+	<!-- Telefonnummer -->
+	<xsd:group name="TelefonnummerGroup">
+		<xsd:sequence>
+			<xsd:element name="Landskode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Omradekode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Lokaltnummer" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:group>
+	<!-- Telefonnummer -->
+	<xsd:complexType name="TelefonnummerType">
+		<xsd:choice>
+			<xsd:element name="Formattertnummer" type="xsd:string" minOccurs="0"/>
+			<xsd:group ref="co:TelefonnummerGroup"/>
+		</xsd:choice>
+	</xsd:complexType>
+	<!-- Kontaktinformasjon -->
+	<xsd:complexType name="KontaktinformasjonType">
+		<xsd:sequence>
+			<xsd:element name="Adresse" type="co:AdresseType" minOccurs="0"/>
+			<xsd:element name="E-post" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Privattelefon" type="co:TelefonnummerType" minOccurs="0"/>
+			<xsd:element name="Jobbtelefon" type="co:TelefonnummerType" minOccurs="0"/>
+			<xsd:element name="Mobiltelefon" minOccurs="0">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="co:TelefonnummerType">
+							<xsd:attribute name="private" type="xsd:boolean"/>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="Faksnummer" type="co:TelefonnummerType" minOccurs="0"/>
+			<xsd:element name="Internettadresse" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="kontaktinformasjonType" type="co:KontaktinformasjonEnumType"/>
+	</xsd:complexType>
+	<xsd:simpleType name="KontaktinformasjonEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Annet"/>
+			<xsd:enumeration value="Bosted"/>
+			<xsd:enumeration value="Forretningsadresse"/>
+			<xsd:enumeration value="Intern"/>
+			<xsd:enumeration value="Juridisk"/>
+			<xsd:enumeration value="Lonnsslipp"/>
+			<xsd:enumeration value="Tjeneste"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="Kontaktinformasjon" type="co:KontaktinformasjonType"/>
+	<!-- Audit info -->
+	<xsd:complexType name="AuditInfoType">
+		<xsd:sequence>
+			<xsd:element name="OpprettetDato" type="dt:DateType"/>
+			<xsd:element name="OpprettetAv" type="xsd:string"/>
+			<xsd:element name="EndretDato" type="dt:DateType"/>
+			<xsd:element name="EndretAv" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Periode">
+		<xsd:sequence>
+			<xsd:element name="StartDato" type="dt:DateType" minOccurs="0"/>
+			<xsd:element name="SluttDato" type="dt:DateType"/>
+			<xsd:element name="ErPagaende" type="dt:IndicatorType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

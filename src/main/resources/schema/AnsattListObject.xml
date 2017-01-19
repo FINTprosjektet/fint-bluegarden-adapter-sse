@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://ansattlist.bluegarden.no/object/v3_1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dt="http://datatypes.bluegarden.no/object/v3" xmlns:co="http://common.bluegarden.no/object/v1_5" xmlns:kv="http://kodeverk.bluegarden.no/object/v1" xmlns:an="http://ansattlist.bluegarden.no/object/v3_1" xmlns="http://ansattlist.bluegarden.no/object/v3_1">
+
+	<xsd:import namespace="http://kodeverk.bluegarden.no/object/v1" schemaLocation="KodeverkObjects.xml"/>
+	<xsd:import namespace="http://common.bluegarden.no/object/v1_5" schemaLocation="CommonObjects.xml"/>
+	<xsd:import namespace="http://datatypes.bluegarden.no/object/v3" schemaLocation="DataTypes.xml"/>
+
+	<xsd:element name="AnsattList" type="AnsattListObject"/>
+
+	<!-- AnsattList -->
+	<xsd:complexType name="AnsattListObject">
+		<xsd:sequence>
+			<xsd:element name="Ansatt" type="AnsattObject" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Ansatt -->
+	<xsd:complexType name="AnsattObject">
+		<xsd:annotation>
+			<xsd:documentation>representation Ansatt for SNN</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="PersonID" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="StartDato" type="dt:DateType" minOccurs="0"/>
+			<xsd:element name="SluttDato" type="dt:DateType" minOccurs="0"/>
+			<xsd:element name="Signatur" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>En persons unike signatur i konsern</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Fornavn" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Etternavn" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Mobiltelefon" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Person.mobiltelefon</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AnsattNummer" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Identifiserer det enkelte ansettelsesforholdet hos arbeidsgiver.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Fodselsnummer" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Fødselsnummer/personnummer for person</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Arbeidsgiver" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Arbeidsgivernavn</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="ArbeidsgiverNummer" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Arbeidsgivernummeret i lønnssystem. Identifiserer arbeidsgiver som organisasjonsenheten hører under.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Kontaktinformasjon" type="an:KontaktinformasjonType" minOccurs="0" maxOccurs="unbounded"/>
+
+			<xsd:element name="Arbeidsforhold" type="an:ArbeidsforholdType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Ingen, ett eller flere arbeidsforhold tilknyttet ansettelseforhold</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Kontaktinformasjon -->
+	<xsd:complexType name="KontaktinformasjonType">
+		<xsd:sequence>
+			<xsd:element name="Adresse" type="co:AdresseType" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="kontaktinformasjonType" type="an:KontaktinformasjonEnumType"/>
+	</xsd:complexType>
+
+	<!-- Arbeidsforhold -->
+	<xsd:complexType name="ArbeidsforholdType">
+		<xsd:sequence>
+			<xsd:element name="Arbeidsforholdnummer" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifiserer det enkelte arbeidsforholdet gitt ansettelsesforholdet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OrgUnitName" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>organisasjonsenhet</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="OrgUnitId" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Identifiserer den enkelte avdeling under arbeidsgiver</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="IsHovedarbeidsforhold" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Angir hovedarbeidsforhold</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Startdato" type="dt:DateType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Startdato for arbeidsforhold</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Stoppdato" type="dt:DateType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Stoppdato for arbeidsforhold.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Stillingskode" type="kv:StillingKodeverdiType" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Angir stillingskode (f. eks Personalsjef). Gyldig verdi definert av kunde ihenhold til kodeverk 'Stillingskode'</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AnsattforholdsKode" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>employeeTypeCode  - TM_ARBF_PER_DATO.ANSATTFORHOLD </xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Leder" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Referanse til OrganisasjonsenhetIDer som ansatt er leder for</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="status" type="ArbeidsforholdStatusEnumType">
+			<xsd:annotation>
+				<xsd:documentation>Status på arbeidsforhold gitt av ArbeidsforholdEnumType</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<!-- KontaktinformasjonEnumType -->
+	<xsd:simpleType name="KontaktinformasjonEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Internadresse"/>
+			<xsd:enumeration value="Bostedsadresse"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ArbeidsforholdStatusEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Aktiv"/>
+			<xsd:enumeration value="Permisjon"/>
+			<xsd:enumeration value="Sluttet"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

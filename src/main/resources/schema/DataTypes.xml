@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Knut Vatsendvik (Bluegarden as) --><!-- ============================================================================ --><!-- =====      Bluegarden Domenemodul: DataTypes                                                                       ===== --><!-- =====      Beskrivelse: Elementer som bruker til å angi dataformat                                              ===== --><!-- =====      Revisjon: 4                                                                                                              ===== --><!-- =====      Sist oppdatert: 15/6-2009                                                                                          ===== --><!-- ============================================================================ --><xsd:schema targetNamespace="http://datatypes.bluegarden.no/object/v3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://datatypes.bluegarden.no/object/v3">
+	<!-- Sivilstatus -->
+	<xsd:simpleType name="SivilstatusEnumType">
+		<xsd:annotation>
+			<xsd:documentation>Liste over sivilstatustyper</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:normalizedString">
+			<xsd:enumeration value="Annet"/>
+			<xsd:enumeration value="Enke/-mann"/>
+			<xsd:enumeration value="Gift"/>
+			<xsd:enumeration value="RegistertPartner"/>
+			<xsd:enumeration value="Samboer"/>
+			<xsd:enumeration value="Separert"/>
+			<xsd:enumeration value="Skilt"/>
+			<xsd:enumeration value="Ugift"/>
+			<xsd:enumeration value="IkkeKjent"/>
+			<xsd:enumeration value="IkkeSpesifisert"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Slektskapstype -->
+	<xsd:simpleType name="SlektskapsEnumType">
+		<xsd:annotation>
+			<xsd:documentation>Liste over slektskapstyper</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Annet"/>
+			<xsd:enumeration value="Barn"/>
+			<xsd:enumeration value="Barnebarn"/>
+			<xsd:enumeration value="Besteforeldre"/>
+			<xsd:enumeration value="Bror"/>
+			<xsd:enumeration value="Ektefelle"/>
+			<xsd:enumeration value="Far"/>
+			<xsd:enumeration value="Mor"/>
+			<xsd:enumeration value="Nevø"/>
+			<xsd:enumeration value="Partner"/>
+			<xsd:enumeration value="RegistertPartner"/>
+			<xsd:enumeration value="Samboer"/>
+			<xsd:enumeration value="Slekning"/>
+			<xsd:enumeration value="Søsken"/>
+			<xsd:enumeration value="Søster"/>
+			<xsd:enumeration value="Tante"/>
+			<xsd:enumeration value="IkkeKjent"/>
+			<xsd:enumeration value="IkkeSpesifisert"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- Førsørgertype -->
+	<xsd:simpleType name="ForsorgerEnumType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="IkkeForsorger"/>
+			<xsd:enumeration value="EneForsorger"/>
+			<xsd:enumeration value="DeltForsorgerskap"/>
+			<xsd:enumeration value="IkkeKjent"/>
+			<xsd:enumeration value="IkkeSpesifisert"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- ActionType -->
+	<xsd:simpleType name="ActionType">
+		<xsd:annotation>
+			<xsd:documentation>CRUD - based list describing the action that triggered generation of a message</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DEFAULT"/>
+			<xsd:enumeration value="CREATE"/>
+			<xsd:enumeration value="RETRIEVE"/>
+			<xsd:enumeration value="UPDATE"/>
+			<xsd:enumeration value="DELETE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<!-- EntityId -->
+	<xsd:complexType name="EntityIdType">
+		<xsd:annotation>
+			<xsd:documentation>Representerer en unik id for et domeneobjekt. Tilleggsattributter kan settes for å beskrive type id samt "eier" av iden. Datert endring</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="IdValue" type="xsd:string">
+				<xsd:annotation>
+					<xsd:documentation>Unik id</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="AlternativeIdValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation>Liste av alternative id'er</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Id navn</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="validFrom" type="DateTimeType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Id gyldig fra dato</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="validTo" type="DateTimeType" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>Id gyldig til dato</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="idOwner" type="xsd:string" use="optional">
+			<xsd:annotation>
+				<xsd:documentation>"Eier" av id</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<!-- Extension -->
+	<xsd:complexType name="UserAreaType">
+		<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+			<xsd:annotation>
+				<xsd:documentation/>
+			</xsd:annotation>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- ====================================================================== -->
+	<!-- =====      UN/CEFACT CCTS Core Data Types                                                         ===== -->
+	<!-- ====================================================================== -->
+	<xsd:complexType name="TextType">
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:string">
+				<xsd:attribute name="languageID" type="xsd:string" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- ====================================================================== -->
+	<!-- =====      Common Types                                          ===== -->
+	<!-- ====================================================================== -->
+	<!-- Beløp -->
+	<xsd:complexType name="AmountType">
+		<xsd:annotation>
+			<xsd:documentation>Beløp med valuta som attributt. Desimaler angies med punktum ".", ingen skilletegn benyttes mellom hvert tusen.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:decimal">
+				<xsd:attribute name="currency" type="xsd:string" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Identifiserer valuta. Må følge ISO 4217. Hvis ikke satt er det NOK som gjelder</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- Mål og mengder -->
+	<xsd:complexType name="QuantityType">
+		<xsd:annotation>
+			<xsd:documentation>Mål og mengder er definert ved en xsd:decimal. Desimaler angis med punktum ".", ingen skilletegn benyttes mellom hvert tusen.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:decimal">
+				<xsd:attribute name="unitCode" type="xsd:string" use="optional"/>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- Prosent -->
+	<xsd:complexType name="PercentType">
+		<xsd:annotation>
+			<xsd:documentation>Prosentsatser er basert på xsd:decimal. Prosentsatser angies som...</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:decimal"/>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<!-- Binære objekter -->
+	<xsd:complexType name="BinaryObjectType">
+		<xsd:annotation>
+			<xsd:documentation>Datatype for overføring av binære data. Mottaker av data må forsikre seg om at det er en godkjent mimeCode mottatt og at innholdet ikke inneholder kan fåføre noen skade. Jvn "Malicious File Execution"</xsd:documentation>
+		</xsd:annotation>
+		<xsd:simpleContent>
+			<xsd:extension base="xsd:base64Binary">
+				<xsd:attribute name="mimeCode" type="xsd:string" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Kodet beskrivelse av innhold. For eksempel "application/pdf"</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="characterSetCode" type="xsd:string" use="optional">
+					<xsd:annotation>
+						<xsd:documentation>Beskrivelse av karaktersettet som benyttes i forbindelse med teksttype</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:simpleType name="YearType">
+		<xsd:annotation>
+			<xsd:documentation>Må følge ISO 8601</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:gYear"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="MonthType">
+		<xsd:annotation>
+			<xsd:documentation>Må følge ISO 8601</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:gMonth"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="YearMonthType">
+		<xsd:restriction base="xsd:gYearMonth"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateTimeType">
+		<xsd:restriction base="xsd:dateTime"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="TimeType">
+		<xsd:restriction base="xsd:time"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="DateType">
+		<xsd:restriction base="xsd:date"/>
+	</xsd:simpleType>
+	<!-- Indikatorer -->
+	<xsd:simpleType name="IndicatorType">
+		<xsd:annotation>
+			<xsd:documentation>Indikatorer er av typen xsd:boolean (logiske). Verdiene som benyttes er true / false. Default-verdien for indikatorer er "false".</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:boolean"/>
+	</xsd:simpleType>
+	<!-- ====================================================================== -->
+	<!-- =====      CCTS Business Data Types                              ===== -->
+	<!-- ====================================================================== -->
+	<xsd:simpleType name="IntegerNumericType">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="PositiveIntegerNumericType">
+		<xsd:restriction base="IntegerNumericType"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="NormalizedStringType">
+		<xsd:restriction base="xsd:normalizedString"/>
+	</xsd:simpleType>
+	<!-- ====================================================================== -->
+	<!-- =====      ISO Data Types                                                                         					===== -->
+	<!-- ====================================================================== -->
+	<xsd:simpleType name="SprakCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Må følge ISO 639-1 - Alpha-2 kode (to bokstaver).</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:language"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="KjonnCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Må følge ISO 5218 - Definisjon av kjønn gjennom en språknøytral ensifferet kode (0 - Ikke Kjent; 1 - Mann; 2 - Kvinne; 9 - Ikke Spesifiert)</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:pattern value="[0129]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LandCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Må følge ISO 3166-1 - Representasjon av land</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[A-Z][A-Z]"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="DomainEventType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NewEmployee"/>
+			<xsd:enumeration value="ReEmployee"/>
+			<xsd:enumeration value="ChangeEmployee"/>
+			<xsd:enumeration value="TerminateEmployee"/>
+			<xsd:enumeration value="FixedSalary"/>
+			<xsd:enumeration value="NewVTT"/>
+			<xsd:enumeration value="LeaveAbsence"/>
+			<xsd:enumeration value="SicknessAbsence"/>
+			<xsd:enumeration value="HolidayAbsence"/>
+			<xsd:enumeration value="NewOrganisation"/>
+			<xsd:enumeration value="ChangeOrganisation"/>
+			<xsd:enumeration value="CompleteOrganisation"/>
+			<xsd:enumeration value="UserMessage"/>
+			<xsd:enumeration value="AccessMessage"/>
+			<xsd:enumeration value="NewAdditionalInformation"/>
+			<xsd:enumeration value="ChangeAdditionalInformation"/>
+			<xsd:enumeration value="EndAdditionalInformation"/>
+			<xsd:enumeration value="ChangeWorkschedule"/>
+			<xsd:enumeration value="PayrollJob">
+				<xsd:annotation>
+					<xsd:documentation>V. Lønkørsel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="AbsenceUsed">
+				<xsd:annotation>
+					<xsd:documentation>Brugt fravær ifm. lønkørsel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="AutoMove">
+				<xsd:annotation>
+					<xsd:documentation>Autoryk v. lønkørsel</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="Taxcard">
+				<xsd:annotation>
+					<xsd:documentation>Skattekort</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="NewSalarySimulation"/>
+			<xsd:enumeration value="NewPayElementCalculation"/>
+			<xsd:enumeration value="MoveEmployeeToNewEmployer"/>
+			<xsd:enumeration value="ChangePublicHolidays"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

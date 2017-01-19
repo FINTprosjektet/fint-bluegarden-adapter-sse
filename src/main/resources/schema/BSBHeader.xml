@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://bluemsg.bluegarden.no/object/v3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:co="http://common.bluegarden.no/object/v3" xmlns:dt="http://datatypes.bluegarden.no/object/v3" xmlns="http://bluemsg.bluegarden.no/object/v3">
+	<xs:import namespace="http://datatypes.bluegarden.no/object/v3" schemaLocation="DataTypes.xml"/>
+	<xs:simpleType name="LimitedString200">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="196"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BSBHeaderType">
+		<xs:annotation>
+			<xs:documentation>Header som normalt sett er med i alle meldinger</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SourceCompany" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Identifies the customer this message belongs to</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SourceEmployer" type="xs:string" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Identifies the employer/employers this message belongs to</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SourceSystem" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Identifies the system sending the message</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SourceUser" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The logged on user on the system sending the message. Used for auditing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageId" type="LimitedString200">
+				<xs:annotation>
+					<xs:documentation>Unique idendtificator of the message. Must be unique across clients. Max length is 196 symbols</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserArea" type="dt:UserAreaType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tilbygg til eksisterende modell</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="BSBHeader" type="BSBHeaderType">
+		<xs:annotation>
+			<xs:documentation>This is the standard header, that should be included in all request and response messages used by Bluegarden Integrasjon</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2015 sp2 (x64) (http://www.altova.com) by vkin (Bluegarden AS) --><xs:schema targetNamespace="http://bluegarden.no/organisation/structure/service/v31" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ob="http://bluegarden.no/organisation/structure/object/v31" xmlns="http://bluegarden.no/organisation/structure/service/v31">
+	<xs:import namespace="http://bluegarden.no/organisation/structure/object/v31" schemaLocation="OrgStructureObjects.xml"/>
+	<xs:element name="getOrgListRequest">
+		<xs:annotation>
+			<xs:documentation>Request object to get list of org units</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+			         <xs:choice>
+					<xs:sequence>
+						<xs:element name="Arbeidsgiver" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+			        				<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+								</xs:restriction>
+							</xs:simpleType>				
+						</xs:element>
+						<xs:element name="OrgUnitId" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+			        				<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+								</xs:restriction>
+							</xs:simpleType>				
+						</xs:element>
+					</xs:sequence>
+					<xs:sequence>
+						<xs:element name="GroupId" minOccurs="1" maxOccurs="1">
+							<xs:simpleType>
+			        				<xs:restriction base="xs:string">
+									<xs:minLength value="1"/>
+								</xs:restriction>
+							</xs:simpleType>				
+						</xs:element>
+					</xs:sequence>
+			         </xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getOrgListResponse">
+		<xs:annotation>
+			<xs:documentation>Response object  to get list of org units</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ob:OrgList" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getOrgUnitRequest">
+		<xs:annotation>
+			<xs:documentation>Request object to get description of org unit</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Arbeidsgiver" minOccurs="1" maxOccurs="1">
+					<xs:simpleType>
+	        				<xs:restriction base="xs:string">
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>				
+				</xs:element>
+				<xs:element name="OrgUnitId" minOccurs="1" maxOccurs="1">
+					<xs:simpleType>
+	        				<xs:restriction base="xs:string">
+							<xs:minLength value="1"/>
+						</xs:restriction>
+					</xs:simpleType>				
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getOrgUnitResponse">
+		<xs:annotation>
+			<xs:documentation>Response object  to get description of org unit</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ob:OrgUnit" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

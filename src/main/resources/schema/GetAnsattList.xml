@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 3 sp1 (http://www.altova.com) by anpr (BLUEGARDEN AS) --><xs:schema targetNamespace="http://ansattlist.bluegarden.no/service/v3_1" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://ansattlist.bluegarden.no/service/v3_1" xmlns:ns2="http://ansattlist.bluegarden.no/object/v3_1">
+	<xs:import namespace="http://ansattlist.bluegarden.no/object/v3_1" schemaLocation="AnsattListObject.xml"/>
+	<xs:element name="GetAnsattListRequestMessage" type="ns1:GetAnsattListRequestMessageType"/>
+	<xs:element name="GetAnsattListResultMessage" type="ns1:GetAnsattListResultMessageType"/>
+	<xs:complexType name="GetAnsattListRequestMessageType">
+		<xs:sequence>
+			<xs:element name="Arbeidsgiver" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+        				<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>				
+			</xs:element>
+			<xs:element name="OrgUnitId" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+        				<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>				
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetAnsattListResultMessageType">
+		<xs:sequence>
+			<xs:element ref="ns2:AnsattList" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

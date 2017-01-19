@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="OrgStructureService" targetNamespace="http://bluegarden.no/organisation/structure/wsdl/v31" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://bluegarden.no/organisation/structure/service/v31" xmlns:WL5G3N2="http://bluemsg.bluegarden.no/object/v3" xmlns:WL5G3N3="http://bluegarden.no/organisation/structure/wsdl/v31" xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:bmh="http://bluemsg.bluegarden.no/object/v3" xmlns:os="http://bluegarden.no/organisation/structure/service/v31" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://bluegarden.no/organisation/structure/wsdl/v31" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://bluemsg.bluegarden.no/object/v3" schemaLocation="BSBHeader.xml"/>
+      <xsd:import namespace="http://bluegarden.no/organisation/structure/service/v31" schemaLocation="GetOrgList.xml"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="getOrgList_RequestMessage">
+    <WL5G3N0:part element="WL5G3N1:getOrgListRequest" name="getOrgListRequest"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getOrgList_ResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:getOrgListResponse" name="getOrgListResponse"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getOrgUnit_RequestMessage">
+    <WL5G3N0:part element="WL5G3N1:getOrgUnitRequest" name="getOrgUnitRequest"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="getOrgUnit_ResponseMessage">
+    <WL5G3N0:part element="WL5G3N1:getOrgUnitResponse" name="getOrgUnit_Response"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="BSBHeader">
+    <WL5G3N0:part element="WL5G3N2:BSBHeader" name="BSBHeader"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="IOrgStructureService">
+    <WL5G3N0:operation name="getOrgList">
+      <WL5G3N0:input message="WL5G3N3:getOrgList_RequestMessage"/>
+      <WL5G3N0:output message="WL5G3N3:getOrgList_ResponseMessage"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getOrgUnit">
+      <WL5G3N0:input message="WL5G3N3:getOrgUnit_RequestMessage"/>
+      <WL5G3N0:output message="WL5G3N3:getOrgUnit_ResponseMessage"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="BasicHttpBinding_IOrgStructureService" type="WL5G3N3:IOrgStructureService">
+    <WL5G3N4:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="getOrgList">
+      <WL5G3N4:operation soapAction="getOrgList"/>
+      <WL5G3N0:input>
+        <WL5G3N4:header message="WL5G3N3:BSBHeader" part="BSBHeader" use="literal"/>
+        <WL5G3N4:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N4:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="getOrgUnit">
+      <WL5G3N4:operation soapAction="getOrgUnit"/>
+      <WL5G3N0:input>
+        <WL5G3N4:header message="WL5G3N3:BSBHeader" part="BSBHeader" use="literal"/>
+        <WL5G3N4:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N4:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="BasicHttpBinding_IOrgStructureServiceQSService">
+    <WL5G3N0:port binding="WL5G3N3:BasicHttpBinding_IOrgStructureService" name="BasicHttpBinding_IOrgStructureServiceQSPort">
+      <WL5G3N4:address location="https://bsbsitnext.bluegarden.org/Synchronous/Organisation/Structure/v31/OrgStructureBA"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>
