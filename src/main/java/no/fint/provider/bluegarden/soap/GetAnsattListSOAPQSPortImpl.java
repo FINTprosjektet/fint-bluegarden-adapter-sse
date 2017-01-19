@@ -20,7 +20,7 @@ import java.util.logging.Logger;
                       serviceName = "GetAnsattListSOAPQSService",
                       portName = "GetAnsattListSOAPQSPort",
                       targetNamespace = "http://ansattlist.bluegarden.no/service/v3_1/wsdl",
-                      wsdlLocation = "file:src/main/resources/schema/GetAnsattListBA.wsdl",
+                      /*wsdlLocation = "file:src/main/resources/schema/GetAnsattListBA.wsdl",*/
                       endpointInterface = "no.bluegarden.GetAnsattList")
 
 public class GetAnsattListSOAPQSPortImpl implements GetAnsattList {

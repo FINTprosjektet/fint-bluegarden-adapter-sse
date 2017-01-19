@@ -15,7 +15,7 @@ import java.net.URL;
  * 
  */
 @WebServiceClient(name = "GetAnsattListSOAPQSService", 
-                  wsdlLocation = "file:src/main/resources/schema/GetAnsattListBA.wsdl",
+                  /*wsdlLocation = "file:src/main/resources/schema/GetAnsattListBA.wsdl",*/
                   targetNamespace = "http://ansattlist.bluegarden.no/service/v3_1/wsdl") 
 public class GetAnsattListSOAPQSService extends Service {
 
@@ -26,7 +26,7 @@ public class GetAnsattListSOAPQSService extends Service {
     static {
         URL url = null;
         try {
-            url = new URL("file:src/main/resources/schema/GetAnsattListBA.wsdl");
+            url = new URL("https://bsbsitnext.bluegarden.org/Synchronous/GetAnsattList/v31/GetAnsattListBA?wsdl"/*"file:src/main/resources/schema/GetAnsattListBA.wsdl"*/);
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(GetAnsattListSOAPQSService.class.getName())
                 .log(java.util.logging.Level.INFO, 
