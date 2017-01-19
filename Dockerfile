@@ -1,3 +1,5 @@
 FROM java:8
-ADD build/libs/fint-hrapp-mockadapter-*.jar /data/app.jar
-CMD ["java", "-jar", "/data/app.jar"]
+LABEL authors="Frode Sjovatsen <frode@fintprosjektet.no>"
+
+ADD build/libs/fint-bluegarden-adapter-see-*.jar /data/app.jar
+ENTRYPOINT java ${PARAMS} -jar /data/app.jar

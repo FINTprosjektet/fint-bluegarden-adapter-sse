@@ -4,17 +4,20 @@ import no.fint.event.model.Event
 import no.fint.event.model.Status
 import no.fint.provider.adapter.service.EventResponseService
 import no.fint.provider.adapter.service.EventStatusService
+import no.fint.provider.bluegarden.soap.OrgListItemObject
 import spock.lang.Specification
 
 class EventHandlerServiceSpec extends Specification {
     private EventHandlerService eventHandlerService
     private EventStatusService eventStatusService
     private EventResponseService eventResponseService
+    private OrganisationService organisationService
 
     void setup() {
         eventStatusService = Mock(EventStatusService)
         eventResponseService = Mock(EventResponseService)
-        eventHandlerService = new EventHandlerService(eventStatusService: eventStatusService, eventResponseService: eventResponseService)
+        organisationService = Mock(OrganisationService)
+        eventHandlerService = new EventHandlerService(eventStatusService: eventStatusService, eventResponseService: eventResponseService, organisationService: organisationService)
     }
 
     def "Do nothing when event status is not PROVIDER_ACCEPTED"() {
@@ -41,5 +44,6 @@ class EventHandlerServiceSpec extends Specification {
         then:
         1 * eventStatusService.verifyEvent(_ as Event) >> event
         1 * eventResponseService.postResponse(_ as Event)
+        1 * organisationService.getOrganisationStructure() >> Arrays.asList(new OrgListItemObject())
     }
 }

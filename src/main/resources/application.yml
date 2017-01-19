@@ -2,3 +2,21 @@ springfox:
  title: 'FINT SSE Adapter Skeleton'
  version: '@version@'
 
+fint:
+ provider:
+  adapter:
+   organizations: hfk.no
+   sse-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/sse/%s"
+   status-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/status"
+   response-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/response"
+bluegarden:
+  org-endpoint:
+  employee-endpoint:
+  username:
+  password:
+  employer:
+  orgunitid:
+  source-company:
+  source-system:
+  source-user:
+  source-employer:
