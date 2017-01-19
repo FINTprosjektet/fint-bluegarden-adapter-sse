@@ -2,7 +2,7 @@ FROM java:8
 LABEL authors="Frode Sjovatsen <frode@fintprosjektet.no>"
 
 ADD build/libs/fint-bluegarden-adapter-see-*.jar /data/app.jar
-ADD certs/* /data
+ADD certs/* /data/
 CMD $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias startcom.ca -file /data/ca.crt
 CMD $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias startcom.ca.sub.class1 -file /data/sub.class1.server.ca.crt
 CMD $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias startcom.ca.sub.class2 -file /data/sub.class2.server.ca.crt
