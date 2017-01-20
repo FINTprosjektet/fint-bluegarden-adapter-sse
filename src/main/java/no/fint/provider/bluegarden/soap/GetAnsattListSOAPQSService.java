@@ -26,11 +26,11 @@ public class GetAnsattListSOAPQSService extends Service {
     public final static QName SERVICE = new QName("http://ansattlist.bluegarden.no/service/v3_1/wsdl", "GetAnsattListSOAPQSService");
     public final static QName GetAnsattListSOAPQSPort = new QName("http://ansattlist.bluegarden.no/service/v3_1/wsdl", "GetAnsattListSOAPQSPort");
 
-    static final ClassLoader loader = Application.class.getClassLoader();
+    //static final ClassLoader loader = Application.class.getClassLoader();
     static {
         URL url = null;
         try {
-            url = new URL(loader.getResource("schema/GetAnsattListBA.wsdl").toString()/*"file:schema/GetAnsattListBA.wsdl"*/);
+            url = new URL("https://bsbsitnext.bluegarden.org/Synchronous/GetAnsattList/v31/GetAnsattListBA?wsdl"/*"file:schema/GetAnsattListBA.wsdl"*/);
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(GetAnsattListSOAPQSService.class.getName())
                 .log(java.util.logging.Level.INFO, 
