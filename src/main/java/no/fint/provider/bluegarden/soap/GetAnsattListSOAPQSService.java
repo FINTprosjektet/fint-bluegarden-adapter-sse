@@ -26,7 +26,7 @@ public class GetAnsattListSOAPQSService extends Service {
     static {
         URL url = null;
         try {
-            url = new URL("file:GetAnsattListBA.wsdl");
+            url = new URL("file:schema/GetAnsattListBA.wsdl");
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(GetAnsattListSOAPQSService.class.getName())
                 .log(java.util.logging.Level.INFO, 
