@@ -1,5 +1,7 @@
 package no.fint.provider.bluegarden.soap;
 
+import no.fint.Application;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 import javax.xml.ws.WebEndpoint;
@@ -15,7 +17,7 @@ import java.net.URL;
  * 
  */
 @WebServiceClient(name = "BasicHttpBinding_IOrgStructureServiceQSService", 
-                  wsdlLocation = "file:src/main/resources/schema/OrgStructureBA.wsdl",
+                  /*wsdlLocation = "file:src/main/resources/schema/OrgStructureBA.wsdl",*/
                   targetNamespace = "http://bluegarden.no/organisation/structure/wsdl/v31") 
 public class BasicHttpBindingIOrgStructureServiceQSService extends Service {
 
@@ -23,10 +25,11 @@ public class BasicHttpBindingIOrgStructureServiceQSService extends Service {
 
     public final static QName SERVICE = new QName("http://bluegarden.no/organisation/structure/wsdl/v31", "BasicHttpBinding_IOrgStructureServiceQSService");
     public final static QName BasicHttpBindingIOrgStructureServiceQSPort = new QName("http://bluegarden.no/organisation/structure/wsdl/v31", "BasicHttpBinding_IOrgStructureServiceQSPort");
+    static final ClassLoader loader = Application.class.getClassLoader();
     static {
         URL url = null;
         try {
-            url = new URL("file:src/main/resources/schema/OrgStructureBA.wsdl");
+            url = new URL(loader.getResource("schema/OrgStructureBA.wsdl").toString());
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(BasicHttpBindingIOrgStructureServiceQSService.class.getName())
                 .log(java.util.logging.Level.INFO, 

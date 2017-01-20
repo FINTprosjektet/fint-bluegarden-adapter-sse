@@ -20,7 +20,7 @@ import java.util.logging.Logger;
                       serviceName = "BasicHttpBinding_IOrgStructureServiceQSService",
                       portName = "BasicHttpBinding_IOrgStructureServiceQSPort",
                       targetNamespace = "http://bluegarden.no/organisation/structure/wsdl/v31",
-                      wsdlLocation = "file:src/main/resources/schema/OrgStructureBA.wsdl",
+                      /* wsdlLocation = "file:src/main/resources/schema/OrgStructureBA.wsdl" ,*/
                       endpointInterface = "no.bluegarden.IOrgStructureService")
 
 public class BasicHttpBinding_IOrgStructureServiceQSPortImpl implements IOrgStructureService {
