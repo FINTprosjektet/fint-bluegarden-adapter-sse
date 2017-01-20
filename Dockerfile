@@ -9,11 +9,11 @@ RUN /bin/bash -c 'mkdir $JAVA_HOME/lib/security; \
     $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias startcom.ca.sub.class2 -file /data/sub.class2.server.ca.crt; \
     $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias startcom.ca.sub.class3 -file /data/sub.class3.server.ca.crt; \
     $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt -alias startcom.ca.sub.class4 -file /data/sub.class4.server.ca.crt; \
-    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca -file ca.crt; \
-    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class1 -file sub.class1.server.ca.crt; \
-    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class2 -file sub.class2.server.ca.crt; \
-    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class3 -file sub.class3.server.ca.crt; \
-    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class4 -file sub.class4.server.ca.crt'
+    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca -file /data/ca.crt; \
+    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class1 -file /data/sub.class1.server.ca.crt; \
+    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class2 -file /data/sub.class2.server.ca.crt; \
+    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class3 -file /data/sub.class3.server.ca.crt; \
+    $JAVA_HOME/bin/keytool -import -trustcacerts -keystore $JAVA_HOME/lib/security/jssecacerts -storepass changeit -noprompt -alias startcom.ca.sub.class4 -file /data/sub.class4.server.ca.crt'
 
 
 ENTRYPOINT java ${PARAMS} -jar /data/app.jar
