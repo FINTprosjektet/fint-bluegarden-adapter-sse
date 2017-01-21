@@ -39,7 +39,7 @@ public class SseInitializer {
         });
     }
 
-    Map<String, EventSource> getEventSources() {
+    public Map<String, EventSource> getEventSources() {
         return eventSources;
     }
 }

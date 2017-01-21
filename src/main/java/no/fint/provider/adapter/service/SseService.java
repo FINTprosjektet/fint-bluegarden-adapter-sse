@@ -1,8 +1,8 @@
 package no.fint.provider.adapter.service;
 
 import lombok.extern.slf4j.Slf4j;
-import no.fint.provider.adapter.sse.FintHeaders;
 import no.fint.provider.adapter.sse.FintEventListener;
+import no.fint.provider.adapter.sse.FintHeaders;
 import no.fint.provider.adapter.sse.SseHeaderProvider;
 import no.fint.provider.adapter.sse.SseHeaderSupportFeature;
 import no.fint.provider.bluegarden.service.EventHandlerService;
@@ -10,7 +10,6 @@ import org.glassfish.jersey.media.sse.EventSource;
 import org.glassfish.jersey.media.sse.SseFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.client.Client;
@@ -30,7 +29,7 @@ public class SseService {
     @Value("${fint.provider.adapter.sse-endpoint}")
     String sseEndpoint;
 
-    @Async
+    //@Async
     public EventSource registerOrg(String orgId) {
         WebTarget webTarget = getWebTarget(orgId);
 

@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  backend:
+  bluegarden-adapter:
     build: .
     image: fint/bluegarden-apapter-sse
     container_name: fint-bluegarden-apapter-sse

@@ -4,7 +4,7 @@
 docker-compose stop
 
 # Remove container
-docker-compose rm -f --all
+docker-compose rm -f
 
 # Build new image from compose
 docker-compose build
