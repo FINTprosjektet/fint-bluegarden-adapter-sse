@@ -68,7 +68,7 @@ public class EmployeeService {
         requestContext.put(BindingProvider.PASSWORD_PROPERTY, password);
 
         header = new BSBHeaderType();
-        header.setMessageId(UUID.randomUUID().toString()); // sporing, opprettes av klienten
+        //header.setMessageId(UUID.randomUUID().toString()); // sporing, opprettes av klienten
         header.setSourceCompany(sourceCompany);
         header.setSourceSystem(sourceSystem);
         header.setSourceUser(sourceUser); // innlogget bruker, sporing av klienten som sender request
@@ -111,6 +111,7 @@ public class EmployeeService {
 
     private List<AnsattObject> getEmployeesByOrgUnit(String orgUnitId) {
         request.setOrgUnitId(orgUnitId);
+        header.setMessageId(UUID.randomUUID().toString());
         GetAnsattListResultMessageType employees = port.getAnsattList(request, header);
         return employees.getAnsattList().getAnsatt();
 
