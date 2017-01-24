@@ -112,6 +112,7 @@ public class EmployeeService {
     private List<AnsattObject> getEmployeesByOrgUnit(String orgUnitId) {
         request.setOrgUnitId(orgUnitId);
         header.setMessageId(UUID.randomUUID().toString());
+        log.info("Sending getAnsattList request with MessageId: {} to Bluegarden.", header.getMessageId());
         GetAnsattListResultMessageType employees = port.getAnsattList(request, header);
         return employees.getAnsattList().getAnsatt();
 
