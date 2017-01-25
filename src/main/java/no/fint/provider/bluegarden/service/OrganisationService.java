@@ -1,5 +1,6 @@
 package no.fint.provider.bluegarden.service;
 
+import lombok.extern.slf4j.Slf4j;
 import no.fint.provider.bluegarden.soap.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-
+@Slf4j
 @Service
 public class OrganisationService {
 
@@ -65,7 +66,7 @@ public class OrganisationService {
         header.getSourceEmployer().add(sourceEmployer);
         header.setUserArea(new UserAreaType());
 
-
+        log.info("Sending getOrgList request with MessageId: {} to Bluegarden.", header.getMessageId());
         GetOrgListResponse orgListResponse = port.getOrgList(request, header);
 
         return orgListResponse.getOrgList().get(0).getOrgUnit();
