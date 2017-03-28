@@ -10,6 +10,7 @@ import no.fint.provider.bluegarden.service.mapper.PersonalressursMapperService;
 import no.fint.provider.bluegarden.soap.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -94,8 +95,15 @@ public class BlueGardenService {
         request = new GetAnsattListRequestMessageType();
         request.setArbeidsgiver(employer);
 
+        try {
+            getBlueGardenData();
+        } catch (Exception ignore) {
+            getBlueGardenData();
+        }
+
     }
 
+    @Scheduled(initialDelay = 600000L, fixedRate = 600000L)
     public void getBlueGardenData() {
 
         Long startTimestamp = System.currentTimeMillis();
