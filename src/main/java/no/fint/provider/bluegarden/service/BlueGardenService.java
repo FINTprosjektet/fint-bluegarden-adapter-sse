@@ -1,8 +1,13 @@
 package no.fint.provider.bluegarden.service;
 
 import lombok.extern.slf4j.Slf4j;
+import no.fint.model.administrasjon.personal.Arbeidsforhold;
+import no.fint.model.administrasjon.personal.Personalressurs;
+import no.fint.model.felles.Person;
+import no.fint.provider.bluegarden.service.mapper.ArbeidsforholdMapperService;
+import no.fint.provider.bluegarden.service.mapper.PersonMapperService;
+import no.fint.provider.bluegarden.service.mapper.PersonalressursMapperService;
 import no.fint.provider.bluegarden.soap.*;
-import no.fk.fint.arbeidstaker.Arbeidstaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +21,7 @@ import java.util.UUID;
 
 @Slf4j
 @Service
-public class EmployeeService {
+public class BlueGardenService {
 
     @Value("${bluegarden.employee-endpoint}")
     private String employeeEnpoint;
@@ -49,13 +54,23 @@ public class EmployeeService {
     private OrganisationService organisationService;
 
     @Autowired
-    private EmployeeMapperService employeeMapperService;
+    private PersonMapperService personMapperService;
+
+    @Autowired
+    private PersonalressursMapperService personalressursMapperService;
+
+    @Autowired
+    private ArbeidsforholdMapperService arbeidsforholdMapperService;
 
     private GetAnsattListSOAPQSService service;
     private GetAnsattList port;
     private Map<String, Object> requestContext;
     private BSBHeaderType header;
     private GetAnsattListRequestMessageType request;
+
+    private List<Person> personList;
+    private List<Arbeidsforhold> arbeidsforholdList;
+    private List<Personalressurs> personalressursList;
 
     @PostConstruct
     public void init() {
@@ -79,22 +94,20 @@ public class EmployeeService {
         request = new GetAnsattListRequestMessageType();
         request.setArbeidsgiver(employer);
 
-        //getEmployees();
     }
-    public List<Arbeidstaker> getEmployees() {
+
+    public void getBlueGardenData() {
 
         Long startTimestamp = System.currentTimeMillis();
         Long endTimestamp;
         List<AnsattObject> employeeList = new ArrayList<>();
-        List<Arbeidstaker> arbeidstakerList;
         List<OrgListItemObject> orgListItemObjects = organisationService.getOrganisationStructure();
 
         orgListItemObjects.forEach(org -> {
             if (org.isErAktiv()) {
                 log.info("Getting employees for -- {}", org.getOrgNavn());
                 employeeList.addAll(getEmployeesByOrgUnit(org.getOrgUnitId()));
-            }
-            else {
+            } else {
                 log.info("OrgUnit is not active", org.getOrgNavn());
             }
         });
@@ -102,11 +115,24 @@ public class EmployeeService {
         endTimestamp = System.currentTimeMillis();
 
 
-        arbeidstakerList = employeeMapperService.employeeMapper(employeeList);
+        personList = personMapperService.personMapper(employeeList);
+        arbeidsforholdList = arbeidsforholdMapperService.arbeidsforholdMapper(employeeList);
+        personalressursList = personalressursMapperService.personalressursMapper(employeeList);
 
         log.info("Getting employees took {} seconds", (endTimestamp - startTimestamp) / 1000);
 
-        return arbeidstakerList;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public List<Personalressurs> getPersonalressursList() {
+        return personalressursList;
+    }
+
+    public List<Arbeidsforhold> getArbeidsforholdList() {
+        return arbeidsforholdList;
     }
 
     private List<AnsattObject> getEmployeesByOrgUnit(String orgUnitId) {
@@ -117,7 +143,6 @@ public class EmployeeService {
         return employees.getAnsattList().getAnsatt();
 
     }
-
 
 
 }

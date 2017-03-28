@@ -6,9 +6,9 @@ fint:
  provider:
   adapter:
    organizations: hfk.no
-   sse-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/sse/%s"
-   status-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/status"
-   response-endpoint: "https://api.felleskomponent.no/arbeidstakere/provider/response"
+   sse-endpoint: "https://api.felleskomponent.no/administrasjon/personal/provider/sse/%s"
+   status-endpoint: "https://api.felleskomponent.no/administrasjon/personal/provider/status"
+   response-endpoint: "https://api.felleskomponent.no/administrasjon/personal/provider/response"
 bluegarden:
   org-endpoint:
   employee-endpoint:
