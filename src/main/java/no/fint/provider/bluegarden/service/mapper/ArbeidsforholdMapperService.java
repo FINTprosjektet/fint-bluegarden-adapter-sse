@@ -74,7 +74,7 @@ public class ArbeidsforholdMapperService {
                                         .with(Arbeidsforhold.Relasjonsnavn.ORGANISASJON)
                                         .forType(Organisasjonselement.class)
                                         .path("/administrasjon/organisasjon/organisasjonselement")
-                                        .field("orgid")
+                                        .field("organisasjonsid")
                                         .value(arbeidsforholdType.getOrgUnitId())
                                         .build()
                         );
