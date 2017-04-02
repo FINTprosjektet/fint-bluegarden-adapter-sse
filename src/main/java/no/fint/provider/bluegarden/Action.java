@@ -5,7 +5,6 @@ import java.util.List;
 
 public enum Action {
     HEALTH,
-    GET_ALL_RELATIONS,
     GET_ALL_PERSON,
     GET_ALL_PERSONALRESSURS,
     GET_ALL_ARBEIDSFORHOLD;

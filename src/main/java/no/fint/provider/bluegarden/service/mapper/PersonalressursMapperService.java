@@ -1,13 +1,16 @@
 package no.fint.provider.bluegarden.service.mapper;
 
+import no.fint.model.administrasjon.kodeverk.Personalressurskategori;
+import no.fint.model.administrasjon.personal.Arbeidsforhold;
 import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.Identifikator;
 import no.fint.model.felles.Kontaktinformasjon;
 import no.fint.model.felles.Periode;
-import no.fint.provider.bluegarden.service.RelationService;
+import no.fint.model.felles.Person;
+import no.fint.model.relation.FintResource;
+import no.fint.model.relation.Relation;
 import no.fint.provider.bluegarden.soap.AnsattObject;
 import no.fint.provider.bluegarden.utilities.ArbeidsforholSystemIdUtility;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,14 +20,12 @@ import java.util.List;
 @Service
 public class PersonalressursMapperService {
 
-    @Autowired
-    private RelationService relationService;
+    public List<FintResource<Personalressurs>> personalressursMapper(List<AnsattObject> ansattObjectList) {
 
-    public List<Personalressurs> personalressursMapper(List<AnsattObject> ansattObjectList) {
-
-        List<Personalressurs> personalressursList = new ArrayList<>();
+        List<FintResource<Personalressurs>> personalressursList = new ArrayList<>();
 
         ansattObjectList.forEach(ansattObject -> {
+            FintResource<Personalressurs> fintResource = new FintResource<>();
             Personalressurs personalressurs = new Personalressurs();
 
             Identifikator ansattnummer = new Identifikator();
@@ -48,18 +49,31 @@ public class PersonalressursMapperService {
             ansettelsesperiode.setStart(new Date());
             personalressurs.setAnsettelsesperiode(ansettelsesperiode);
 
-            relationService.addPersonalressursPersonRelation(ansattObject.getFodselsnummer(), ansattObject.getAnsattNummer());
-            relationService.addPersonalressurskategoriPersonalressurskategoriRelation(ansattObject.getAnsattNummer(), "F");
+            fintResource.with(personalressurs)
+                    .addRelasjon(
+                            new Relation.Builder()
+                                    .with(Personalressurs.Relasjonsnavn.PERSON)
+                                    .forType(Person.class)
+                                    .field("fodselsnummer")
+                                    .value(ansattObject.getFodselsnummer())
+                                    .build()
+                    );
+
             ansattObject.getArbeidsforhold().forEach(arbeidsforholdType -> {
-                relationService.addPersonalressursArbeidsforholdRelation(ansattObject.getAnsattNummer(),
-                        ArbeidsforholSystemIdUtility.getSystemId(
-                                ansattObject.getAnsattNummer(),
-                                arbeidsforholdType.getArbeidsforholdnummer()
-                        )
+
+                fintResource.addRelasjon(
+                        new Relation.Builder()
+                                .with(Personalressurs.Relasjonsnavn.ARBEIDSFORHOLD)
+                                .forType(Arbeidsforhold.class)
+                                .field("systemid")
+                                .value(ArbeidsforholSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforholdType.getArbeidsforholdnummer()))
+                                .build()
                 );
+
             });
 
-            personalressursList.add(personalressurs);
+
+            personalressursList.add(fintResource);
         });
 
         return personalressursList;

@@ -42,8 +42,6 @@ public class OrganisationService {
     private String sourceEmployer;
 
 
-
-
     public List<OrgListItemObject> getOrganisationStructure() {
         BasicHttpBindingIOrgStructureServiceQSService service = new BasicHttpBindingIOrgStructureServiceQSService();
         IOrgStructureService port = service.getBasicHttpBindingIOrgStructureServiceQSPort();

@@ -1,10 +1,11 @@
 package no.fint.provider.bluegarden.service.mapper;
 
+import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.*;
-import no.fint.provider.bluegarden.service.RelationService;
+import no.fint.model.relation.FintResource;
+import no.fint.model.relation.Relation;
 import no.fint.provider.bluegarden.soap.AnsattObject;
 import no.fint.provider.bluegarden.soap.KontaktinformasjonEnumType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -17,15 +18,12 @@ import java.util.List;
 @Service
 public class PersonMapperService {
 
-    @Autowired
-    private RelationService relationService;
+    public List<FintResource<Person>> personMapper(List<AnsattObject> ansattObjectList) {
 
-    public List<Person> personMapper(List<AnsattObject> ansattObjectList) {
-
-        List<Person> personList = new ArrayList<>();
+        List<FintResource<Person>> personList = new ArrayList<>();
 
         ansattObjectList.forEach(ansattObject -> {
-
+            FintResource<Person> fintResource = new FintResource<>();
             Person person = new Person();
 
             Identifikator fodselsnummer = new Identifikator();
@@ -40,14 +38,12 @@ public class PersonMapperService {
                     adresse.setPostnummer(kontaktinformasjonType.getAdresse().getPostnummer());
                     adresse.setAdresse(kontaktinformasjonType.getAdresse().getAdresseLinje1());
                     adresse.setPoststed(kontaktinformasjonType.getAdresse().getPoststed());
-                    relationService.addAdresseCountryRelation(kontaktinformasjonType.getAdresse().getLand());
                 }
 
             });
 
             person.setBostedsadresse(adresse);
             person.setPostadresse(adresse);
-
 
             Kontaktinformasjon kontaktInformasjon = new Kontaktinformasjon();
             String epost = String.format("%s.%s@gmail.com", ansattObject.getFornavn(), ansattObject.getEtternavn());
@@ -58,16 +54,21 @@ public class PersonMapperService {
             Date fodselsdato = getFodselsdato(ansattObject.getFodselsnummer());
             person.setFodselsdato(fodselsdato);
 
-            relationService.addPersonGenderRelation(ansattObject.getFodselsnummer(), getGender(ansattObject.getFodselsnummer()));
-
             Personnavn navn = new Personnavn();
             navn.setFornavn(ansattObject.getFornavn());
             navn.setEtternavn(ansattObject.getEtternavn());
             person.setNavn(navn);
 
-            relationService.addPersonPersonalressursRelation(ansattObject.getFodselsnummer(), ansattObject.getAnsattNummer());
-
-            personList.add(person);
+            fintResource.with(person)
+                    .addRelasjon(
+                            new Relation.Builder()
+                                    .with(Person.Relasjonsnavn.PERSONALRESSURS)
+                                    .forType(Personalressurs.class)
+                                    .field("ansattnummer")
+                                    .value(ansattObject.getAnsattNummer())
+                                    .build()
+                    );
+            personList.add(fintResource);
 
         });
 
@@ -77,8 +78,7 @@ public class PersonMapperService {
     private String getGender(String fodselsnummer) {
         if (Integer.valueOf(fodselsnummer.substring(10)) % 2 == 0) {
             return "2";
-        }
-        else {
+        } else {
             return "1";
         }
     }

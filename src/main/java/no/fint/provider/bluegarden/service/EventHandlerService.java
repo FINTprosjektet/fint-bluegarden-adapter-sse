@@ -8,7 +8,7 @@ import no.fint.event.model.Status;
 import no.fint.model.administrasjon.personal.Arbeidsforhold;
 import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.Person;
-import no.fint.model.relation.Relation;
+import no.fint.model.relation.FintResource;
 import no.fint.provider.adapter.Health;
 import no.fint.provider.adapter.service.EventResponseService;
 import no.fint.provider.adapter.service.EventStatusService;
@@ -29,8 +29,8 @@ public class EventHandlerService {
     @Autowired
     private BlueGardenService blueGardenService;
 
-    @Autowired
-    private RelationService relationService;
+    //@Autowired
+    //private RelationService relationService;
 
     @Autowired
     private OrganisationService organisationService;
@@ -43,10 +43,6 @@ public class EventHandlerService {
 
             if (action == Action.HEALTH) {
                 responseEvent = onHealthCheck(event);
-            }
-
-            if (action == Action.GET_ALL_RELATIONS) {
-                responseEvent = onGetAllRelations(event);
             }
 
             if (action == Action.GET_ALL_PERSON) {
@@ -68,16 +64,8 @@ public class EventHandlerService {
         }
     }
 
-    private Event<?> onGetAllRelations(String event) {
-        Event<Relation> relationEvent = EventUtil.toEvent(event);
-
-        relationEvent.setData(relationService.getRelations());
-
-        return relationEvent;
-    }
-
     private Event<?> onGetAllArbeidsforhold(String event) {
-        Event<Arbeidsforhold> arbeidsforholdEvent = EventUtil.toEvent(event);
+        Event<FintResource<Arbeidsforhold>> arbeidsforholdEvent = EventUtil.toEvent(event);
 
         arbeidsforholdEvent.setData(blueGardenService.getArbeidsforholdList());
 
@@ -85,7 +73,7 @@ public class EventHandlerService {
     }
 
     private Event<?> onGetAllPersonalressurs(String event) {
-        Event<Personalressurs> personalressursEvent = EventUtil.toEvent(event);
+        Event<FintResource<Personalressurs>> personalressursEvent = EventUtil.toEvent(event);
 
         personalressursEvent.setData(blueGardenService.getPersonalressursList());
 
@@ -93,7 +81,7 @@ public class EventHandlerService {
     }
 
     private Event<?> onGetAllPerson(String event) {
-        Event<Person> personEvent = EventUtil.toEvent(event);
+        Event<FintResource<Person>> personEvent = EventUtil.toEvent(event);
 
         personEvent.setData(blueGardenService.getPersonList());
 

@@ -1,14 +1,16 @@
 package no.fint.provider.bluegarden.service.mapper;
 
+import no.fint.model.administrasjon.organisasjon.Organisasjonselement;
 import no.fint.model.administrasjon.personal.Arbeidsforhold;
+import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.Identifikator;
 import no.fint.model.felles.Kontaktinformasjon;
 import no.fint.model.felles.Periode;
-import no.fint.provider.bluegarden.service.RelationService;
+import no.fint.model.relation.FintResource;
+import no.fint.model.relation.Relation;
 import no.fint.provider.bluegarden.soap.AnsattObject;
 import no.fint.provider.bluegarden.soap.ArbeidsforholdStatusEnumType;
 import no.fint.provider.bluegarden.utilities.ArbeidsforholSystemIdUtility;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,16 +19,15 @@ import java.util.List;
 @Service
 public class ArbeidsforholdMapperService {
 
-    @Autowired
-    private RelationService relationService;
 
-    public List<Arbeidsforhold> arbeidsforholdMapper(List<AnsattObject> ansattObjectList) {
+    public List<FintResource<Arbeidsforhold>> arbeidsforholdMapper(List<AnsattObject> ansattObjectList) {
 
-        List<Arbeidsforhold> arbeidsforholdList = new ArrayList<>();
+        List<FintResource<Arbeidsforhold>> arbeidsforholdList = new ArrayList<>();
 
         ansattObjectList.forEach(ansattObject -> {
 
             ansattObject.getArbeidsforhold().forEach(arbeidsforholdType -> {
+                FintResource<Arbeidsforhold> fintResource = new FintResource<>();
                 Arbeidsforhold arbeidsforhold = new Arbeidsforhold();
 
                 arbeidsforhold.setAktiv(arbeidsforholdType.getStatus() == ArbeidsforholdStatusEnumType.AKTIV ? true : false);
@@ -59,11 +60,25 @@ public class ArbeidsforholdMapperService {
                 systemId.setIdentifikatorverdi(ArbeidsforholSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforhold.getStillingsnummer()));
                 arbeidsforhold.setSystemId(systemId);
 
-                relationService.addArbeidsforholdPersonalressursRelation(systemId.getIdentifikatorverdi(), ansattObject.getAnsattNummer());
+                fintResource.with(arbeidsforhold)
+                        .addRelasjon(
+                                new Relation.Builder()
+                                        .with(Arbeidsforhold.Relasjonsnavn.PERSONALRESSURS)
+                                        .forType(Personalressurs.class)
+                                        .field("ansattnummer")
+                                        .value(ansattObject.getAnsattNummer())
+                                        .build()
+                        )
+                        .addRelasjon(
+                                new Relation.Builder()
+                                        .with(Arbeidsforhold.Relasjonsnavn.ORGANISASJON)
+                                        .forType(Organisasjonselement.class)
+                                        .field("orgid")
+                                        .value(arbeidsforholdType.getOrgUnitId())
+                                        .build()
+                        );
 
-                relationService.addArbeidsforholdOrganisasjonRelation(systemId.getIdentifikatorverdi(), arbeidsforholdType.getOrgUnitId());
-
-                arbeidsforholdList.add(arbeidsforhold);
+                arbeidsforholdList.add(fintResource);
             });
         });
 

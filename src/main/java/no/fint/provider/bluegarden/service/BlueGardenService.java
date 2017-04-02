@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import no.fint.model.administrasjon.personal.Arbeidsforhold;
 import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.Person;
+import no.fint.model.relation.FintResource;
 import no.fint.provider.bluegarden.service.mapper.ArbeidsforholdMapperService;
 import no.fint.provider.bluegarden.service.mapper.PersonMapperService;
 import no.fint.provider.bluegarden.service.mapper.PersonalressursMapperService;
@@ -69,9 +70,9 @@ public class BlueGardenService {
     private BSBHeaderType header;
     private GetAnsattListRequestMessageType request;
 
-    private List<Person> personList;
-    private List<Arbeidsforhold> arbeidsforholdList;
-    private List<Personalressurs> personalressursList;
+    private List<FintResource<Person>> personList;
+    private List<FintResource<Arbeidsforhold>> arbeidsforholdList;
+    private List<FintResource<Personalressurs>> personalressursList;
 
     @PostConstruct
     public void init() {
@@ -131,15 +132,15 @@ public class BlueGardenService {
 
     }
 
-    public List<Person> getPersonList() {
+    public List<FintResource<Person>> getPersonList() {
         return personList;
     }
 
-    public List<Personalressurs> getPersonalressursList() {
+    public List<FintResource<Personalressurs>> getPersonalressursList() {
         return personalressursList;
     }
 
-    public List<Arbeidsforhold> getArbeidsforholdList() {
+    public List<FintResource<Arbeidsforhold>> getArbeidsforholdList() {
         return arbeidsforholdList;
     }
 

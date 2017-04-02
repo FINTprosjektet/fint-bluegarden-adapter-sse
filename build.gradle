@@ -51,8 +51,8 @@ dependencies {
     compile("com.github.springfox.loader:springfox-loader:${springfoxLoaderVersion}")
 
     compile('no.fint:fint-event-model:0.0.11')
-    compile('no.fint:fint-administrasjon-model-java:1.0.0-rc.2.8')
-    compile('no.fint:fint-relation-model:0.0.10')
+    compile('no.fint:fint-administrasjon-model-java:1.0.0-rc.2.17')
+    compile('no.fint:fint-relation-model:0.0.20')
 
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')
