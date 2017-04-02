@@ -64,6 +64,7 @@ public class PersonMapperService {
                             new Relation.Builder()
                                     .with(Person.Relasjonsnavn.PERSONALRESSURS)
                                     .forType(Personalressurs.class)
+                                    .path("/administrasjon/personal/personalressurs")// api.felleskomponent.no/administrasjon/personalressurs
                                     .field("ansattnummer")
                                     .value(ansattObject.getAnsattNummer())
                                     .build()
