@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonalressursMapperService {
@@ -25,7 +26,6 @@ public class PersonalressursMapperService {
         List<FintResource<Personalressurs>> personalressursList = new ArrayList<>();
 
         ansattObjectList.forEach(ansattObject -> {
-            FintResource<Personalressurs> fintResource = new FintResource<>();
             Personalressurs personalressurs = new Personalressurs();
 
             Identifikator ansattnummer = new Identifikator();
@@ -49,31 +49,28 @@ public class PersonalressursMapperService {
             ansettelsesperiode.setStart(new Date());
             personalressurs.setAnsettelsesperiode(ansettelsesperiode);
 
-            fintResource.with(personalressurs)
-                    .addRelasjon(
-                            new Relation.Builder()
-                                    .with(Personalressurs.Relasjonsnavn.PERSON)
-                                    .forType(Person.class)
-                                    .path("/administrasjon/personal/person")
-                                    .field("fodselsnummer")
-                                    .value(ansattObject.getFodselsnummer())
-                                    .build()
-                    );
 
-            ansattObject.getArbeidsforhold().forEach(arbeidsforholdType -> {
+            List<Relation> arbeidsforholdRelasjoner = ansattObject.getArbeidsforhold().stream().map(arbeidsforholdType -> {
 
-                fintResource.addRelasjon(
-                        new Relation.Builder()
+                return new Relation.Builder()
                                 .with(Personalressurs.Relasjonsnavn.ARBEIDSFORHOLD)
                                 .forType(Arbeidsforhold.class)
                                 .path("/administrasjon/personal/arbeidsforhold")
                                 .field("systemid")
                                 .value(ArbeidsforholSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforholdType.getArbeidsforholdnummer()))
-                                .build()
-                );
+                                .build();
 
-            });
+            }).collect(Collectors.toList());
+            arbeidsforholdRelasjoner.add( new Relation.Builder()
+                    .with(Personalressurs.Relasjonsnavn.PERSON)
+                    .forType(Person.class)
+                    .path("/administrasjon/personal/person")
+                    .field("fodselsnummer")
+                    .value(ansattObject.getFodselsnummer())
+                    .build());
 
+            FintResource<Personalressurs> fintResource = FintResource.with(personalressurs);
+            fintResource.setRelasjoner(arbeidsforholdRelasjoner);
 
             personalressursList.add(fintResource);
         });

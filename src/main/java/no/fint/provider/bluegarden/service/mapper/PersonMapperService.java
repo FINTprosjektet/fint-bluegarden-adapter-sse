@@ -23,7 +23,6 @@ public class PersonMapperService {
         List<FintResource<Person>> personList = new ArrayList<>();
 
         ansattObjectList.forEach(ansattObject -> {
-            FintResource<Person> fintResource = new FintResource<>();
             Person person = new Person();
 
             Identifikator fodselsnummer = new Identifikator();
@@ -59,7 +58,7 @@ public class PersonMapperService {
             navn.setEtternavn(ansattObject.getEtternavn());
             person.setNavn(navn);
 
-            fintResource.with(person)
+            FintResource<Person> fintResource = FintResource.with(person)
                     .addRelasjon(
                             new Relation.Builder()
                                     .with(Person.Relasjonsnavn.PERSONALRESSURS)

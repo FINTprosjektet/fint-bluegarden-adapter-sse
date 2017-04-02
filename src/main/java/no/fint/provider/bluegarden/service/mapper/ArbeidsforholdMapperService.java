@@ -27,7 +27,6 @@ public class ArbeidsforholdMapperService {
         ansattObjectList.forEach(ansattObject -> {
 
             ansattObject.getArbeidsforhold().forEach(arbeidsforholdType -> {
-                FintResource<Arbeidsforhold> fintResource = new FintResource<>();
                 Arbeidsforhold arbeidsforhold = new Arbeidsforhold();
 
                 arbeidsforhold.setAktiv(arbeidsforholdType.getStatus() == ArbeidsforholdStatusEnumType.AKTIV ? true : false);
@@ -60,7 +59,7 @@ public class ArbeidsforholdMapperService {
                 systemId.setIdentifikatorverdi(ArbeidsforholSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforhold.getStillingsnummer()));
                 arbeidsforhold.setSystemId(systemId);
 
-                fintResource.with(arbeidsforhold)
+                FintResource<Arbeidsforhold> fintResource = FintResource.with(arbeidsforhold)
                         .addRelasjon(
                                 new Relation.Builder()
                                         .with(Arbeidsforhold.Relasjonsnavn.PERSONALRESSURS)
