@@ -79,31 +79,35 @@ public class BlueGardenService {
     }
 
     @Scheduled(initialDelay = 600000L, fixedRate = 600000L)
-    public void getBlueGardenData() {
+    public void getBlueGardenDataScheduled() {
         if (bluegardenProps.isSchedulingEnabled()) {
-            Long startTimestamp = System.currentTimeMillis();
-            Long endTimestamp;
-            List<AnsattObject> employeeList = new ArrayList<>();
-            List<OrgListItemObject> orgListItemObjects = organisationService.getOrganisationStructure();
-
-            orgListItemObjects.forEach(org -> {
-                if (org.isErAktiv()) {
-                    log.info("Getting employees for -- {}", org.getOrgNavn());
-                    employeeList.addAll(getEmployeesByOrgUnit(org.getOrgUnitId()));
-                } else {
-                    log.info("OrgUnit is not active", org.getOrgNavn());
-                }
-            });
-
-            endTimestamp = System.currentTimeMillis();
-
-
-            personList = personMapper.convertToResource(employeeList);
-            arbeidsforholdList = arbeidsforholdMapper.convertToResource(employeeList);
-            personalressursList = personalressursMapper.convertToResource(employeeList);
-
-            log.info("Getting employees took {} seconds", (endTimestamp - startTimestamp) / 1000);
+            getBlueGardenData();
         }
+    }
+
+    public void getBlueGardenData() {
+        Long startTimestamp = System.currentTimeMillis();
+        Long endTimestamp;
+        List<AnsattObject> employeeList = new ArrayList<>();
+        List<OrgListItemObject> orgListItemObjects = organisationService.getOrganisationStructure();
+
+        orgListItemObjects.forEach(org -> {
+            if (org.isErAktiv()) {
+                log.info("Getting employees for -- {}", org.getOrgNavn());
+                employeeList.addAll(getEmployeesByOrgUnit(org.getOrgUnitId()));
+            } else {
+                log.info("OrgUnit is not active", org.getOrgNavn());
+            }
+        });
+
+        endTimestamp = System.currentTimeMillis();
+
+
+        personList = personMapper.convertToResource(employeeList);
+        arbeidsforholdList = arbeidsforholdMapper.convertToResource(employeeList);
+        personalressursList = personalressursMapper.convertToResource(employeeList);
+
+        log.info("Getting employees took {} seconds", (endTimestamp - startTimestamp) / 1000);
     }
 
     public List<FintResource<Person>> getPersonList() {
