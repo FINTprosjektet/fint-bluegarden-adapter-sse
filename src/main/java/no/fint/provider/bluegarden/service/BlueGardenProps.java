@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @Getter
 @Component
-public class BluegardenProps {
+public class BlueGardenProps {
 
     @Value("${bluegarden.scheduling-enabled:false}")
     private String schedulingEnabled;

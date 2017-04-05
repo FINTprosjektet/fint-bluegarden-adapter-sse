@@ -24,7 +24,7 @@ import java.util.UUID;
 @Service
 public class BlueGardenService {
     @Autowired
-    private BluegardenProps bluegardenProps;
+    private BlueGardenProps bluegardenProps;
 
     @Autowired
     private OrganisationService organisationService;

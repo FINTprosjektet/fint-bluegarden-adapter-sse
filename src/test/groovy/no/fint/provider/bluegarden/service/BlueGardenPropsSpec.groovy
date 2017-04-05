@@ -2,11 +2,11 @@ package no.fint.provider.bluegarden.service
 
 import spock.lang.Specification
 
-class BluegardenPropsSpec extends Specification {
+class BlueGardenPropsSpec extends Specification {
 
     def "Scheduling disabled"() {
         given:
-        def props = new BluegardenProps(schedulingEnabled: 'false')
+        def props = new BlueGardenProps(schedulingEnabled: 'false')
 
         when:
         def schedulingEnabled = props.isSchedulingEnabled()
@@ -17,7 +17,7 @@ class BluegardenPropsSpec extends Specification {
 
     def "Scheduling enabled"() {
         given:
-        def props = new BluegardenProps(schedulingEnabled: 'true')
+        def props = new BlueGardenProps(schedulingEnabled: 'true')
 
         when:
         def schedulingEnabled = props.isSchedulingEnabled()
