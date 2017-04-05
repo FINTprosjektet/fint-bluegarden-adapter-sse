@@ -1,6 +1,5 @@
 package no.fint.provider.bluegarden.service.mapper;
 
-import no.fint.model.administrasjon.kodeverk.Personalressurskategori;
 import no.fint.model.administrasjon.personal.Arbeidsforhold;
 import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.Identifikator;
@@ -10,18 +9,18 @@ import no.fint.model.felles.Person;
 import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
 import no.fint.provider.bluegarden.soap.AnsattObject;
-import no.fint.provider.bluegarden.utilities.ArbeidsforholSystemIdUtility;
-import org.springframework.stereotype.Service;
+import no.fint.provider.bluegarden.utilities.ArbeidsforholdSystemIdUtility;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-public class PersonalressursMapperService {
+@Component
+public class PersonalressursMapper {
 
-    public List<FintResource<Personalressurs>> personalressursMapper(List<AnsattObject> ansattObjectList) {
+    public List<FintResource<Personalressurs>> convertToResource(List<AnsattObject> ansattObjectList) {
 
         List<FintResource<Personalressurs>> personalressursList = new ArrayList<>();
 
@@ -49,32 +48,32 @@ public class PersonalressursMapperService {
             ansettelsesperiode.setStart(new Date());
             personalressurs.setAnsettelsesperiode(ansettelsesperiode);
 
-
-            List<Relation> arbeidsforholdRelasjoner = ansattObject.getArbeidsforhold().stream().map(arbeidsforholdType -> {
-
-                return new Relation.Builder()
-                                .with(Personalressurs.Relasjonsnavn.ARBEIDSFORHOLD)
-                                .forType(Arbeidsforhold.class)
-                                .path("/administrasjon/personal/arbeidsforhold")
-                                .field("systemid")
-                                .value(ArbeidsforholSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforholdType.getArbeidsforholdnummer()))
-                                .build();
-
-            }).collect(Collectors.toList());
-            arbeidsforholdRelasjoner.add( new Relation.Builder()
-                    .with(Personalressurs.Relasjonsnavn.PERSON)
-                    .forType(Person.class)
-                    .path("/administrasjon/personal/person")
-                    .field("fodselsnummer")
-                    .value(ansattObject.getFodselsnummer())
-                    .build());
-
-            FintResource<Personalressurs> fintResource = FintResource.with(personalressurs);
-            fintResource.setRelasjoner(arbeidsforholdRelasjoner);
-
+            FintResource<Personalressurs> fintResource = createFintResource(ansattObject, personalressurs);
             personalressursList.add(fintResource);
         });
 
         return personalressursList;
+    }
+
+    private FintResource<Personalressurs> createFintResource(AnsattObject ansattObject, Personalressurs personalressurs) {
+        List<Relation> arbeidsforholdRelasjoner = ansattObject.getArbeidsforhold().stream().map(arbeidsforholdType ->
+                new Relation.Builder().with(Personalressurs.Relasjonsnavn.ARBEIDSFORHOLD)
+                        .forType(Arbeidsforhold.class)
+                        .path("/administrasjon/personal/arbeidsforhold")
+                        .field("systemid")
+                        .value(ArbeidsforholdSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforholdType.getArbeidsforholdnummer()))
+                        .build()).collect(Collectors.toList()
+        );
+
+        arbeidsforholdRelasjoner.add(new Relation.Builder().with(Personalressurs.Relasjonsnavn.PERSON)
+                .forType(Person.class)
+                .path("/administrasjon/personal/person")
+                .field("fodselsnummer")
+                .value(ansattObject.getFodselsnummer())
+                .build());
+
+        FintResource<Personalressurs> fintResource = FintResource.with(personalressurs);
+        fintResource.setRelasjoner(arbeidsforholdRelasjoner);
+        return fintResource;
     }
 }

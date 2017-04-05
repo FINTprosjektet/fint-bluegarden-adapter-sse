@@ -9,7 +9,7 @@ class SseInitializerSpec extends Specification {
     private SseService sseService
 
     void setup() {
-        organizations = ["rogfk.no", "hfk.no", "vaf.no"]
+        organizations = ['rogfk.no', 'hfk.no', 'vaf.no']
         sseService = Mock(SseService)
         sseInitializer = new SseInitializer(organizations: organizations, sseService: sseService)
     }

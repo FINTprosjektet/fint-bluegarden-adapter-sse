@@ -15,12 +15,12 @@ class EventStatusServiceSpec extends Specification {
 
     void setup() {
         restTemplate = Mock(RestTemplate)
-        eventStatusService = new EventStatusService(statusEndpoint: "http://localhost", restTemplate: restTemplate)
+        eventStatusService = new EventStatusService(statusEndpoint: 'http://localhost', restTemplate: restTemplate)
     }
 
     def "Verify valid event"() {
         given:
-        def event = new Event(orgId: "rogfk.no", action: Action.HEALTH)
+        def event = new Event(orgId: 'rogfk.no', action: Action.HEALTH)
 
         when:
         def response = eventStatusService.verifyEvent(event)
@@ -32,7 +32,7 @@ class EventStatusServiceSpec extends Specification {
 
     def "Verify invalid event"() {
         given:
-        def event = new Event(orgId: "rogfk.no", action: "testing")
+        def event = new Event(orgId: 'rogfk.no', action: 'testing')
 
         when:
         def response = eventStatusService.verifyEvent(event)

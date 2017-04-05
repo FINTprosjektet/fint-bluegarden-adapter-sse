@@ -29,9 +29,6 @@ public class EventHandlerService {
     @Autowired
     private BlueGardenService blueGardenService;
 
-    //@Autowired
-    //private RelationService relationService;
-
     @Autowired
     private OrganisationService organisationService;
 
@@ -43,17 +40,11 @@ public class EventHandlerService {
 
             if (action == Action.HEALTH) {
                 responseEvent = onHealthCheck(event);
-            }
-
-            if (action == Action.GET_ALL_PERSON) {
+            } else if (action == Action.GET_ALL_PERSON) {
                 responseEvent = onGetAllPerson(event);
-            }
-
-            if (action == Action.GET_ALL_PERSONALRESSURS) {
+            } else if (action == Action.GET_ALL_PERSONALRESSURS) {
                 responseEvent = onGetAllPersonalressurs(event);
-            }
-
-            if (action == Action.GET_ALL_ARBEIDSFORHOLD) {
+            } else if (action == Action.GET_ALL_ARBEIDSFORHOLD) {
                 responseEvent = onGetAllArbeidsforhold(event);
             }
 
@@ -66,25 +57,19 @@ public class EventHandlerService {
 
     private Event<?> onGetAllArbeidsforhold(String event) {
         Event<FintResource<Arbeidsforhold>> arbeidsforholdEvent = EventUtil.toEvent(event);
-
         arbeidsforholdEvent.setData(blueGardenService.getArbeidsforholdList());
-
         return arbeidsforholdEvent;
     }
 
     private Event<?> onGetAllPersonalressurs(String event) {
         Event<FintResource<Personalressurs>> personalressursEvent = EventUtil.toEvent(event);
-
         personalressursEvent.setData(blueGardenService.getPersonalressursList());
-
         return personalressursEvent;
     }
 
     private Event<?> onGetAllPerson(String event) {
         Event<FintResource<Person>> personEvent = EventUtil.toEvent(event);
-
         personEvent.setData(blueGardenService.getPersonList());
-
         return personEvent;
     }
 
@@ -102,10 +87,6 @@ public class EventHandlerService {
     }
 
     private boolean healthCheck() {
-
-        if (organisationService.getOrganisationStructure().size() > 0) {
-            return true;
-        }
-        return false;
+        return organisationService.getOrganisationStructure().size() > 0;
     }
 }

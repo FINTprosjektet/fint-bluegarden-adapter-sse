@@ -18,12 +18,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 public class PersonalController {
 
     @Autowired
     private BlueGardenService blueGardenService;
-
 
     @RequestMapping(value = "/person", method = RequestMethod.GET)
     public List<FintResource<Person>> getPersonList() {

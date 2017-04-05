@@ -7,12 +7,12 @@ class SseServiceSpec extends Specification {
     private SseService sseService
 
     void setup() {
-        sseService = new SseService(eventHandler: Mock(EventHandlerService), sseEndpoint: "http://localhost")
+        sseService = new SseService(eventHandler: Mock(EventHandlerService), sseEndpoint: 'http://localhost')
     }
 
     def "Register organisation"() {
         when:
-        def eventSource = sseService.registerOrg("rogfk.no")
+        def eventSource = sseService.registerOrg('rogfk.no')
 
         then:
         eventSource != null
@@ -20,10 +20,10 @@ class SseServiceSpec extends Specification {
 
     def "Create WebTarget with http headers"() {
         when:
-        def target = sseService.getWebTarget("rogfk.no")
+        def target = sseService.getWebTarget('rogfk.no')
 
         then:
-        target.getUri().toString() == "http://localhost"
+        target.getUri().toString() == 'http://localhost'
         target.getConfiguration().getInstances().size() == 1
     }
 }

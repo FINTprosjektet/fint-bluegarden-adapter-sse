@@ -1,12 +1,13 @@
 package no.fint.provider.bluegarden.service.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import no.fint.model.administrasjon.personal.Personalressurs;
 import no.fint.model.felles.*;
 import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
 import no.fint.provider.bluegarden.soap.AnsattObject;
 import no.fint.provider.bluegarden.soap.KontaktinformasjonEnumType;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,13 +16,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class PersonMapperService {
+@Slf4j
+@Component
+public class PersonMapper {
 
-    public List<FintResource<Person>> personMapper(List<AnsattObject> ansattObjectList) {
-
+    public List<FintResource<Person>> convertToResource(List<AnsattObject> ansattObjectList) {
         List<FintResource<Person>> personList = new ArrayList<>();
-
         ansattObjectList.forEach(ansattObject -> {
             Person person = new Person();
 
@@ -30,15 +30,12 @@ public class PersonMapperService {
             person.setFodselsnummer(fodselsnummer);
 
             Adresse adresse = new Adresse();
-
             ansattObject.getKontaktinformasjon().forEach(kontaktinformasjonType -> {
-
                 if (kontaktinformasjonType.getKontaktinformasjonType().equals(KontaktinformasjonEnumType.BOSTEDSADRESSE)) {
                     adresse.setPostnummer(kontaktinformasjonType.getAdresse().getPostnummer());
                     adresse.setAdresse(kontaktinformasjonType.getAdresse().getAdresseLinje1());
                     adresse.setPoststed(kontaktinformasjonType.getAdresse().getPoststed());
                 }
-
             });
 
             person.setBostedsadresse(adresse);
@@ -58,29 +55,12 @@ public class PersonMapperService {
             navn.setEtternavn(ansattObject.getEtternavn());
             person.setNavn(navn);
 
-            FintResource<Person> fintResource = FintResource.with(person)
-                    .addRelasjon(
-                            new Relation.Builder()
-                                    .with(Person.Relasjonsnavn.PERSONALRESSURS)
-                                    .forType(Personalressurs.class)
-                                    .path("/administrasjon/personal/personalressurs")// api.felleskomponent.no/administrasjon/personalressurs
-                                    .field("ansattnummer")
-                                    .value(ansattObject.getAnsattNummer())
-                                    .build()
-                    );
+            FintResource<Person> fintResource = createFintResource(ansattObject, person);
             personList.add(fintResource);
 
         });
 
         return personList;
-    }
-
-    private String getGender(String fodselsnummer) {
-        if (Integer.valueOf(fodselsnummer.substring(10)) % 2 == 0) {
-            return "2";
-        } else {
-            return "1";
-        }
     }
 
     private Date getFodselsdato(String fodselsnummer) {
@@ -89,8 +69,20 @@ public class PersonMapperService {
         try {
             return dateFormat.parse(stringDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error("Unable to parse date {}", stringDate);
             return new Date();
         }
+    }
+
+    private FintResource<Person> createFintResource(AnsattObject ansattObject, Person person) {
+        return FintResource.with(person).addRelasjon(
+                new Relation.Builder()
+                        .with(Person.Relasjonsnavn.PERSONALRESSURS)
+                        .forType(Personalressurs.class)
+                        .path("/administrasjon/personal/personalressurs")
+                        .field("ansattnummer")
+                        .value(ansattObject.getAnsattNummer())
+                        .build()
+        );
     }
 }

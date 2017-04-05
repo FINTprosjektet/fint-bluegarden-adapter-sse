@@ -24,12 +24,11 @@ import java.util.UUID;
 public class SseService {
 
     @Autowired
-    EventHandlerService eventHandler;
+    private EventHandlerService eventHandler;
 
     @Value("${fint.provider.adapter.sse-endpoint}")
-    String sseEndpoint;
+    private String sseEndpoint;
 
-    //@Async
     public EventSource registerOrg(String orgId) {
         WebTarget webTarget = getWebTarget(orgId);
 

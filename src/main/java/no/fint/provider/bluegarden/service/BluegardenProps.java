@@ -1,14 +1,19 @@
 package no.fint.provider.bluegarden.service;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Slf4j
-@Service
-public class StartupService {
+@Getter
+@Component
+public class BluegardenProps {
+
+    @Value("${bluegarden.scheduling-enabled:false}")
+    private String schedulingEnabled;
 
     @Value("${bluegarden.employee-endpoint}")
     private String employeeEnpoint;
@@ -40,9 +45,9 @@ public class StartupService {
     @Value("${bluegarden.source-employer}")
     private String sourceEmployer;
 
+
     @PostConstruct
     public void init() {
-
         log.info("bluegarden.employee-endpoint: {}", employeeEnpoint);
         log.info("bluegarden.org-endpoint: {}", orgEnpoint);
         log.info("bluegarden.username: {}", username);
@@ -53,4 +58,9 @@ public class StartupService {
         log.info("bluegarden.source-user: {}", sourceUser);
         log.info("bluegarden.source-employer: {}", sourceEmployer);
     }
+
+    public boolean isSchedulingEnabled() {
+        return Boolean.valueOf(schedulingEnabled);
+    }
+
 }

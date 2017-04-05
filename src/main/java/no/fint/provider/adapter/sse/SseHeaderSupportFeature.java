@@ -6,7 +6,6 @@ import javax.ws.rs.core.FeatureContext;
 public class SseHeaderSupportFeature implements Feature {
     private final SseHeaderSupportFilter filter;
 
-
     public SseHeaderSupportFeature(SseHeaderProvider provider) {
         this.filter = new SseHeaderSupportFilter(provider);
     }

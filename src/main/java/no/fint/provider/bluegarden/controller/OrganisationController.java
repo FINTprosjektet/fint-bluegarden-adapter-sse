@@ -15,11 +15,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/organisation", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/organisation", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 public class OrganisationController {
 
     @Autowired
-    OrganisationService organisationService;
+    private OrganisationService organisationService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<OrgListItemObject> getOrganisationList() {
