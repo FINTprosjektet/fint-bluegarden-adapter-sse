@@ -1,0 +1,11 @@
+springfox:
+ title: 'FINT SSE Adapter Skeleton'
+ version: '@version@'
+
+fint:
+ provider:
+  adapter:
+   organizations: hfk.no
+   sse-endpoint: "http://localhost:8080"
+   status-endpoint: "http://localhost:8080"
+   response-endpoint: "http://localhost:8080"
