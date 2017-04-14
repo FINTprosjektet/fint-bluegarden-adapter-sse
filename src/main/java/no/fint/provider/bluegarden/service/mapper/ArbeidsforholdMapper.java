@@ -60,20 +60,18 @@ public class ArbeidsforholdMapper {
 
     private FintResource<Arbeidsforhold> createFintResource(AnsattObject ansattObject, ArbeidsforholdType arbeidsforholdType, Arbeidsforhold arbeidsforhold) {
         return FintResource.with(arbeidsforhold)
-                .addRelasjon(
+                .addRelasjoner(
                         new Relation.Builder()
                                 .with(Arbeidsforhold.Relasjonsnavn.PERSONALRESSURS)
                                 .forType(Personalressurs.class)
-                                .path("/administrasjon/personal/personalressurs")
                                 .field("ansattnummer")
                                 .value(ansattObject.getAnsattNummer())
                                 .build()
                 )
-                .addRelasjon(
+                .addRelasjoner(
                         new Relation.Builder()
-                                .with(Arbeidsforhold.Relasjonsnavn.ORGANISASJON)
+                                .with(Arbeidsforhold.Relasjonsnavn.ARBEIDSSTED)
                                 .forType(Organisasjonselement.class)
-                                .path("/administrasjon/organisasjon/organisasjonselement")
                                 .field("organisasjonskode")
                                 .value(arbeidsforholdType.getOrgUnitId())
                                 .build()

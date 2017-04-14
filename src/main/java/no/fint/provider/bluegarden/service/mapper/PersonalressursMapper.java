@@ -59,7 +59,6 @@ public class PersonalressursMapper {
         List<Relation> arbeidsforholdRelasjoner = ansattObject.getArbeidsforhold().stream().map(arbeidsforholdType ->
                 new Relation.Builder().with(Personalressurs.Relasjonsnavn.ARBEIDSFORHOLD)
                         .forType(Arbeidsforhold.class)
-                        .path("/administrasjon/personal/arbeidsforhold")
                         .field("systemid")
                         .value(ArbeidsforholdSystemIdUtility.getSystemId(ansattObject.getAnsattNummer(), arbeidsforholdType.getArbeidsforholdnummer()))
                         .build()).collect(Collectors.toList()
@@ -67,13 +66,10 @@ public class PersonalressursMapper {
 
         arbeidsforholdRelasjoner.add(new Relation.Builder().with(Personalressurs.Relasjonsnavn.PERSON)
                 .forType(Person.class)
-                .path("/administrasjon/personal/person")
                 .field("fodselsnummer")
                 .value(ansattObject.getFodselsnummer())
                 .build());
 
-        FintResource<Personalressurs> fintResource = FintResource.with(personalressurs);
-        fintResource.setRelasjoner(arbeidsforholdRelasjoner);
-        return fintResource;
+        return FintResource.with(personalressurs).addRelasjoner(arbeidsforholdRelasjoner);
     }
 }

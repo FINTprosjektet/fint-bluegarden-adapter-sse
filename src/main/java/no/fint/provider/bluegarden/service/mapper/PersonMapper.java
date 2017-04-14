@@ -75,11 +75,10 @@ public class PersonMapper {
     }
 
     private FintResource<Person> createFintResource(AnsattObject ansattObject, Person person) {
-        return FintResource.with(person).addRelasjon(
+        return FintResource.with(person).addRelasjoner(
                 new Relation.Builder()
                         .with(Person.Relasjonsnavn.PERSONALRESSURS)
                         .forType(Personalressurs.class)
-                        .path("/administrasjon/personal/personalressurs")
                         .field("ansattnummer")
                         .value(ansattObject.getAnsattNummer())
                         .build()
