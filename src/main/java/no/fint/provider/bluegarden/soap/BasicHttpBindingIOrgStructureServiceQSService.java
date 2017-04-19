@@ -1,6 +1,6 @@
 package no.fint.provider.bluegarden.soap;
 
-import no.fint.Application;
+import no.fint.provider.Application;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;

@@ -9,7 +9,6 @@ import no.fint.model.felles.Periode;
 import no.fint.model.relation.FintResource;
 import no.fint.model.relation.Relation;
 import no.fint.provider.bluegarden.soap.AnsattObject;
-import no.fint.provider.bluegarden.soap.ArbeidsforholdStatusEnumType;
 import no.fint.provider.bluegarden.soap.ArbeidsforholdType;
 import no.fint.provider.bluegarden.utilities.ArbeidsforholdSystemIdUtility;
 import org.springframework.stereotype.Component;
@@ -26,7 +25,6 @@ public class ArbeidsforholdMapper {
         ansattObjectList.forEach(ansattObject -> {
             ansattObject.getArbeidsforhold().forEach(arbeidsforholdType -> {
                 Arbeidsforhold arbeidsforhold = new Arbeidsforhold();
-                arbeidsforhold.setAktiv(arbeidsforholdType.getStatus() == ArbeidsforholdStatusEnumType.AKTIV);
                 arbeidsforhold.setAnsettelsesprosent(100.0);
                 arbeidsforhold.setLonnsprosent(100.0);
                 arbeidsforhold.setArslonn(450000.0);

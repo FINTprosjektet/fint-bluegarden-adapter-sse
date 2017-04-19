@@ -1,7 +1,3 @@
-springfox:
- title: 'FINT SSE Adapter Skeleton'
- version: '@version@'
-
 fint:
  provider:
   adapter:
