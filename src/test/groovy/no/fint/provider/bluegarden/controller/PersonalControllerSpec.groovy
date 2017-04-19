@@ -11,6 +11,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 
 import static org.hamcrest.CoreMatchers.equalTo
+import static org.hamcrest.Matchers.hasSize
 
 class PersonalControllerSpec extends MockMvcSpecification {
     private PersonalController controller
@@ -45,6 +46,32 @@ class PersonalControllerSpec extends MockMvcSpecification {
                 .andExpect(jsonPath('$[0].resource.ansattnummer.identifikatorverdi').value(equalTo('234')))
     }
 
+    def "Get personalressurs with ansattnummer"() {
+        when:
+        def response = mockMvc.perform(get('/personalressurs').param('ansattnummer', '123'))
+
+        then:
+        1 * blueGardenService.getPersonalressursList() >> [
+                FintResource.with(new Personalressurs(ansattnummer: new Identifikator(identifikatorverdi: '123'))),
+                FintResource.with(new Personalressurs(ansattnummer: new Identifikator(identifikatorverdi: '234')))
+        ]
+        response.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath('$', hasSize(1)))
+                .andExpect(jsonPath('$[0].resource.ansattnummer.identifikatorverdi').value(equalTo('123')))
+    }
+
+    def "Get empty list when no personalressurs is found for ansattnummer"() {
+        when:
+        def response = mockMvc.perform(get('/personalressurs').param('ansattnummer', 'unknown'))
+
+        then:
+        1 * blueGardenService.getPersonalressursList() >> [FintResource.with(new Personalressurs(ansattnummer: new Identifikator(identifikatorverdi: '123')))]
+        response.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath('$', hasSize(0)))
+    }
+
     def "Get arbeidsforhold list"() {
         when:
         def response = mockMvc.perform(get('/arbeidsforhold'))
@@ -54,6 +81,32 @@ class PersonalControllerSpec extends MockMvcSpecification {
         response.andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath('$[0].resource.systemId.identifikatorverdi').value(equalTo('345')))
+    }
+
+    def "Get arbeidsforhold with systemId"() {
+        when:
+        def response = mockMvc.perform(get('/arbeidsforhold').param('systemId', '123'))
+
+        then:
+        1 * blueGardenService.getArbeidsforholdList() >> [
+                FintResource.with(new Arbeidsforhold(systemId: new Identifikator(identifikatorverdi: '123'))),
+                FintResource.with(new Arbeidsforhold(systemId: new Identifikator(identifikatorverdi: '234')))
+        ]
+        response.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath('$', hasSize(1)))
+                .andExpect(jsonPath('$[0].resource.systemId.identifikatorverdi').value(equalTo('123')))
+    }
+
+    def "Get empty list when no arbeidsforhold is found for systemId"() {
+        when:
+        def response = mockMvc.perform(get('/arbeidsforhold').param('systemId', 'unknown'))
+
+        then:
+        1 * blueGardenService.getArbeidsforholdList() >> [FintResource.with(new Arbeidsforhold(systemId: new Identifikator(identifikatorverdi: '123')))]
+        response.andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath('$', hasSize(0)))
     }
 
     def "Refresh Bluegarden data"() {
