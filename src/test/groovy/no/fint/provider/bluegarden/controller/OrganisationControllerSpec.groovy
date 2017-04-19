@@ -1,17 +1,14 @@
 package no.fint.provider.bluegarden.controller
 
+import com.github.spock.spring.utils.MockMvcSpecification
 import no.fint.provider.bluegarden.service.OrganisationService
 import no.fint.provider.bluegarden.soap.OrgListItemObject
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.equalTo
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-class OrganisationControllerSpec extends Specification {
+class OrganisationControllerSpec extends MockMvcSpecification {
     private OrganisationController controller
     private OrganisationService organisationService
     private MockMvc mockMvc
@@ -19,7 +16,7 @@ class OrganisationControllerSpec extends Specification {
     void setup() {
         organisationService = Mock(OrganisationService)
         controller = new OrganisationController(organisationService: organisationService)
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build()
+        mockMvc = standaloneSetup(controller)
     }
 
     def "Get organisation list"() {

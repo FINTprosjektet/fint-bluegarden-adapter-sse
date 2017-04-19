@@ -37,7 +37,6 @@ class ArbeidsforholdMapperSpec extends Specification {
 
         then:
         fintResource.size() == 1
-        fintResource[0].resource.isAktiv()
         fintResource[0].relasjoner.size() == 2
     }
 }

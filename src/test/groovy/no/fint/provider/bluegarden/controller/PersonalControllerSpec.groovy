@@ -1,5 +1,6 @@
 package no.fint.provider.bluegarden.controller
 
+import com.github.spock.spring.utils.MockMvcSpecification
 import no.fint.model.administrasjon.personal.Arbeidsforhold
 import no.fint.model.administrasjon.personal.Personalressurs
 import no.fint.model.felles.Identifikator
@@ -8,14 +9,10 @@ import no.fint.model.relation.FintResource
 import no.fint.provider.bluegarden.service.BlueGardenService
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.equalTo
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-class PersonalControllerSpec extends Specification {
+class PersonalControllerSpec extends MockMvcSpecification {
     private PersonalController controller
     private BlueGardenService blueGardenService
     private MockMvc mockMvc
@@ -23,7 +20,7 @@ class PersonalControllerSpec extends Specification {
     void setup() {
         blueGardenService = Mock(BlueGardenService)
         controller = new PersonalController(blueGardenService: blueGardenService)
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build()
+        mockMvc = standaloneSetup(controller)
     }
 
     def "Get person list"() {
