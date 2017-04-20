@@ -70,7 +70,7 @@ public class PersonMapper {
             return dateFormat.parse(stringDate);
         } catch (ParseException e) {
             log.error("Unable to parse date {}", stringDate);
-            return new Date();
+            return null;
         }
     }
 

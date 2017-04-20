@@ -44,8 +44,8 @@ public class PersonalressursMapper {
             personalressurs.setKontaktinformasjon(kontaktInformasjon);
 
             Periode ansettelsesperiode = new Periode();
-            ansettelsesperiode.setSlutt(new Date());
-            ansettelsesperiode.setStart(new Date());
+            ansettelsesperiode.setSlutt(new Date(1524243712000L));
+            ansettelsesperiode.setStart(new Date(1492714912881L));
             personalressurs.setAnsettelsesperiode(ansettelsesperiode);
 
             FintResource<Personalressurs> fintResource = createFintResource(ansattObject, personalressurs);
