@@ -36,7 +36,8 @@ public class PersonalController {
         if (StringUtils.isEmpty(ansattnummer)) {
             return personalressursList;
         } else {
-            Optional<FintResource<Personalressurs>> personalressurs = personalressursList.stream().filter(resource -> ansattnummer.equals(resource.getResource().getAnsattnummer().getIdentifikatorverdi())).findFirst();
+            Optional<FintResource<Personalressurs>> personalressurs = personalressursList.stream()
+                    .filter(resource -> ansattnummer.equals(resource.getResource().getAnsattnummer().getIdentifikatorverdi())).findFirst();
             return personalressurs.<List<FintResource<Personalressurs>>>map(ImmutableList::of).orElseGet(Collections::emptyList);
         }
     }
@@ -47,7 +48,8 @@ public class PersonalController {
         if (StringUtils.isEmpty(systemId)) {
             return arbeidsforholdList;
         } else {
-            Optional<FintResource<Arbeidsforhold>> arbeidsforhold = arbeidsforholdList.stream().filter(resource -> systemId.equals(resource.getResource().getSystemId().getIdentifikatorverdi())).findFirst();
+            Optional<FintResource<Arbeidsforhold>> arbeidsforhold = arbeidsforholdList.stream()
+                    .filter(resource -> systemId.equals(resource.getResource().getSystemId().getIdentifikatorverdi())).findFirst();
             return arbeidsforhold.<List<FintResource<Arbeidsforhold>>>map(ImmutableList::of).orElseGet(Collections::emptyList);
         }
     }
